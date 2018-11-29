@@ -62,7 +62,7 @@ var validate;
 		<div class="form-group">
 			<label class="col-sm-2 control-label">LOGO：</label>
 			<div class="col-sm-4">
-				<sys:fileInput path="logo" value="${sysAbout.logo}" type="icon" thumbSize="200X200"></sys:fileInput>
+				<sys:fileInput path="logo" value="${sysAbout.logo}" type="10" thumbSize="100X100"></sys:fileInput>
 			</div>
 		</div>
 		<div class="form-group">

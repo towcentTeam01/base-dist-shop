@@ -11,7 +11,7 @@
 		a.desc_pic_v AS "descPicV",
 		a.structure_name AS "structureName",
 		 (case when gcd.channel_id is null then 2 else 1 end ) AS "assigned",
-		#{channelId}  AS "channelId"
+		gcd.channel_id  AS "channelId"
 	</sql>
 	
 	<sql id="goodsChannelJoins">
@@ -61,7 +61,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise> 
-				ORDER BY assigned ASC,a.update_date DESC
+				ORDER BY (case when gcd.channel_id is null then 2 else 1 end ) ASC,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>

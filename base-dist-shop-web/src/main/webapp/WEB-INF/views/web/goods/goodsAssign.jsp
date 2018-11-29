@@ -123,7 +123,7 @@
 					    <a href="${ctx}/goods/goodsChannelDtl/cancle?goodsIds=${channelGoods.goodsId }&channelId=${channelGoods.channelId }">取消分配</a>
 						</c:if>
 						<c:if test="${channelGoods.assigned==2 }">
-							<a href="${ctx}/goods/goodsChannelDtl/assign?goodsIds=${channelGoods.goodsId }&channelId=${channelGoods.channelId }">分配</a>
+							<a href="${ctx}/goods/goodsChannelDtl/assign?goodsIds=${channelGoods.goodsId }&channelId=${channel.id}">分配</a>
 						</c:if>
 					</td>
 				</tr>

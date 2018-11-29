@@ -103,10 +103,10 @@
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">
-				<span><font color="red">*</font></span>频道图片：
+				频道图片：
 			</label>
 			<div class="col-sm-3">
-				<sys:fileInput path="channelImg" value="${goodsChannel.channelImg}" type="icon" thumbSize="80X80" classS="form-control required input-upload"></sys:fileInput>
+				<sys:fileInput path="channelImg" value="${goodsChannel.channelImg}" type="5" thumbSize="230X230" classS="form-control input-upload"></sys:fileInput>
 			</div>
 		</div>
 		<div class="form-group">
