@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.sys.dao.SysPosterTemplateDao">
+    
+	<sql id="sysPosterTemplateColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.pic_url AS "picUrl",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.merchant_id AS "merchantId"
+	</sql>
+	
+	<sql id="sysPosterTemplateJoins">
+	</sql>
+    
+	<select id="get" resultType="SysPosterTemplate">
+		SELECT 
+			<include refid="sysPosterTemplateColumns"/>
+		FROM sys_poster_template a
+		<include refid="sysPosterTemplateJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysPosterTemplate">
+		SELECT 
+			<include refid="sysPosterTemplateColumns"/>
+		FROM sys_poster_template a
+		<include refid="sysPosterTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysPosterTemplate">
+		SELECT 
+			<include refid="sysPosterTemplateColumns"/>
+		FROM sys_poster_template a
+		<include refid="sysPosterTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO sys_poster_template(
+					title,
+					pic_url,
+					sort,
+					create_by,
+					create_date,
+					update_by,
+					update_date,
+					del_flag,
+					merchant_id
+		) VALUES (
+			#{title},
+			#{picUrl},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{merchantId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO sys_poster_template 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="title != null">	
+				title,
+			</if>	
+			<if test="picUrl != null">	
+				pic_url,
+			</if>	
+			<if test="sort != null">	
+				sort,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="createDate != null">	
+				create_date,
+			</if>	
+			<if test="updateBy.id != null">	
+				update_by,
+			</if>	
+			<if test="updateDate != null">	
+				update_date,
+			</if>	
+			<if test="delFlag != null">	
+				del_flag,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="picUrl != null">
+				#{picUrl},
+			</if>
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateBy.id != null">
+				#{updateBy.id},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_poster_template SET 	
+			title = #{title},
+			pic_url = #{picUrl},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			merchant_id = #{merchantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE sys_poster_template  	
+		<set >		
+			<if test="title != null">	
+			title = #{title},
+			</if>
+			<if test="picUrl != null">	
+			pic_url = #{picUrl},
+			</if>
+			<if test="sort != null">	
+			sort = #{sort},
+			</if>
+			<if test="updateBy.id != null">	
+			update_by = #{updateBy.id},
+			</if>
+			<if test="updateDate != null">	
+			update_date = #{updateDate},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_poster_template SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

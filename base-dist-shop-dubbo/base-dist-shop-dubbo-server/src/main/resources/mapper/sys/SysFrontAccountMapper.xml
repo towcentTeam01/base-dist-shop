@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.sys.dao.SysFrontAccountMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="trade_password" property="tradePassword" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="freeze_amount" property="freezeAmount" javaType="DECIMAL"/>
+		<result column="margin_amount" property="marginAmount" javaType="DECIMAL"/>
+		<result column="settled_amount" property="settledAmount" javaType="DECIMAL"/>
+		<result column="inter" property="inter" javaType="INTEGER"/>
+		<result column="job_no" property="jobNo" jdbcType="VARCHAR" />
+		<result column="level_vip" property="levelVip" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="portrait" property="portrait" jdbcType="VARCHAR" />
+		<result column="open_id" property="openId" jdbcType="VARCHAR" />
+		<result column="mini_open_id" property="miniOpenId" jdbcType="VARCHAR" />
+		<result column="union_id" property="unionId" jdbcType="VARCHAR" />
+		<result column="bind_wx" property="bindWx" jdbcType="VARCHAR" />
+		<result column="wx_qr_code" property="wxQrCode" jdbcType="VARCHAR" />
+		<result column="poster_url" property="posterUrl" jdbcType="VARCHAR" />
+		<result column="mini_qr_code" property="miniQrCode" jdbcType="VARCHAR" />
+		<result column="bind_weibo" property="bindWeibo" jdbcType="VARCHAR" />
+		<result column="bind_qq" property="bindQq" jdbcType="VARCHAR" />
+		<result column="last_logintime" property="lastLogintime" jdbcType="TIMESTAMP" />
+		<result column="login_times" property="loginTimes" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="user_type" property="userType" jdbcType="CHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="customer_num" property="customerNum" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.account, a.mobile, a.email, a.password, a.trade_password, a.amount, a.freeze_amount, a.margin_amount, a.settled_amount , a.inter , a.job_no , a.level_vip , a.parent_id , a.sex, a.nick_name, a.portrait, a.open_id, a.mini_open_id, a.union_id, a.bind_wx, 
+  	  	a.wx_qr_code, a.poster_url, a.mini_qr_code,
+  	  	a.bind_weibo, a.bind_qq, a.last_logintime, a.login_times, a.status, a.user_type, a.remark, a.create_date, a.del_flag, a.merchant_id 
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.account != null and '' != params.account" >
+        		and a.account = #{params.account,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.mobile != null and '' != params.mobile" >
+        		and a.mobile = #{params.mobile,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.email != null and '' != params.email" >
+        		and a.email = #{params.email,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.password != null and '' != params.password" >
+        		and a.password = #{params.password,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.tradePassword != null and '' != params.tradePassword" >
+        		and a.trade_password = #{params.tradePassword,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.nickName != null and '' != params.nickName" >
+        		and a.nick_name = #{params.nickName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.portrait != null and '' != params.portrait" >
+        		and a.portrait = #{params.portrait,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.openId != null and '' != params.openId" >
+        		and a.open_id = #{params.openId,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.miniOpenId != null and '' != params.miniOpenId" >
+        		and a.mini_open_id = #{params.miniOpenId,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.unionId != null and '' != params.unionId" >
+        		and a.union_id = #{params.unionId,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.bindWx != null and '' != params.bindWx" >
+        		and a.bind_wx = #{params.bindWx,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.bindWeibo != null and '' != params.bindWeibo" >
+        		and a.bind_weibo = #{params.bindWeibo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.bindQq != null and '' != params.bindQq" >
+        		and a.bind_qq = #{params.bindQq,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.lastLogintime != null" >
+        		and a.last_logintime = #{params.lastLogintime,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.loginTimes != null" >
+        		and a.login_times = #{params.loginTimes,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.status != null and '' != params.status" >
+        		and a.status = #{params.status,jdbcType=CHAR}
+      		</if>
+      		<if test="params.userType != null and '' != params.userType" >
+        		and a.user_type = #{params.userType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.remark != null and '' != params.remark" >
+        		and a.remark = #{params.remark,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.accountAll != null and '' != params.accountAll">
+      			and (a.account = #{params.accountAll,jdbcType=VARCHAR} 
+      			OR a.mobile = #{params.accountAll,jdbcType=VARCHAR} 
+      			OR a.email = #{params.accountAll,jdbcType=VARCHAR} )
+      		</if>
+			<if test="params.freezeAmount != null and freezeAmount != ''">
+				a.freeze_amount = #{params.freezeAmount,jdbcType=DECIMAL}
+			</if>
+			<if test="params.jobNo != null and '' != params.jobNo" >
+        		and a.job_no = #{params.jobNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.levelVip != null and '' != params.levelVip" >
+        		and a.level_vip = #{params.levelVip,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.notLevelVip != null and '' != params.notLevelVip" >
+        		and a.level_vip != #{params.notLevelVip,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.parentId != null and '' != params.parentId" >
+        		and a.parent_id = #{params.parentId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.merchantId != null and '' != params.merchantId" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.searchStr != null and '' != params.searchStr">
+      			and (a.account = #{params.searchStr,jdbcType=VARCHAR} 
+      			OR a.mobile = #{params.searchStr,jdbcType=VARCHAR} 
+      			OR a.job_no = #{params.searchStr,jdbcType=VARCHAR} )
+      		</if>
+    		<!-- tabFlag(1:代理商 2:普通用户)  -->
+    		<if test="params.tabFlag != null and params.tabFlag == 1">
+    			and a.level_vip != 1
+    		</if>
+      		<if test="params.tabFlag != null and params.tabFlag == 2">
+      			and a.level_vip = 1
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_front_account a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		<if test="null!=params" >
+		  	<if test="params.isQty == true">
+		  		, (SELECT COUNT(1) FROM sys_front_account af WHERE af.id = a.parent_id) AS customer_num
+		  	</if>
+	  	</if>
+		from sys_front_account a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_front_account a where 1=1 
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	<if test="null!=params" >
+		  	<if test="params.isQty == true">
+		  		, (SELECT COUNT(1) FROM sys_front_account af WHERE af.id = a.parent_id) AS customer_num
+		  	</if>
+	  	</if>
+	  	from sys_front_account a
+	  	where 1=1 
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField}
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_front_account
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" >
+	  	delete from sys_front_account
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_front_account (
+					id,
+			account,
+			mobile,
+			email,
+			password,
+			trade_password,
+			amount,
+			freeze_amount,
+			margin_amount,
+			settled_amount,
+			inter,
+			job_no,
+			level_vip,
+			parent_id,
+			sex,
+			nick_name,
+			portrait,
+			open_id,
+			mini_open_id,
+			union_id,
+			bind_wx,
+			wx_qr_code, poster_url, mini_qr_code,
+			bind_weibo,
+			bind_qq,
+			last_logintime,
+			login_times,
+			status,
+			user_type,
+			remark,
+			create_date,
+			del_flag
+    	)
+    	values (
+			#{id,jdbcType=INTEGER},
+			#{account,jdbcType=VARCHAR},
+			#{mobile,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{tradePassword,jdbcType=VARCHAR},
+			#{amount,jdbcType=DECIMAL},
+			#{freezeAmount,jdbcType=DECIMAL},
+			#{marginAmount,jdbcType=DECIMAL},
+			#{settledAmount,jdbcType=DECIMAL},
+			#{inter,jdbcType=INTEGER},
+			#{jobNo,jdbcType=VARCHAR},
+			#{levelVip,jdbcType=VARCHAR},
+			#{parentId,jdbcType=INTEGER},
+			#{sex,jdbcType=VARCHAR},
+			#{nickName,jdbcType=VARCHAR},
+			#{portrait,jdbcType=VARCHAR},
+			#{openId,jdbcType=VARCHAR},
+			#{miniOpenId,jdbcType=VARCHAR},
+			#{unionId,jdbcType=VARCHAR},
+			#{bindWx,jdbcType=VARCHAR},
+			#{wxQrCode,jdbcType=VARCHAR},#{posterUrl,jdbcType=VARCHAR},#{miniQrCode,jdbcType=VARCHAR},
+			#{bindWeibo,jdbcType=VARCHAR},
+			#{bindQq,jdbcType=VARCHAR},
+			#{lastLogintime,jdbcType=TIMESTAMP},
+			#{loginTimes,jdbcType=INTEGER},
+			#{status,jdbcType=CHAR},
+			#{userType,jdbcType=CHAR},
+			#{remark,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR}
+			
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_front_account 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="account != null and '' != account" >
+      			account,
+      		</if>
+      		<if test="mobile != null and '' != mobile" >
+      			mobile,
+      		</if>
+      		<if test="email != null and '' != email" >
+      			email,
+      		</if>
+      		<if test="password != null and '' != password" >
+      			password,
+      		</if>
+      		<if test="tradePassword != null and '' != tradePassword" >
+      			trade_password,
+      		</if>
+      		<if test="amount != null and '' != amount" >
+      			amount,
+      		</if>
+      		<if test="freezeAmount != null and freezeAmount != ''">
+				freeze_amount,
+			</if>
+			<if test="marginAmount != null and marginAmount != ''">
+				margin_amount,
+			</if>
+			<if test="settledAmount != null and settledAmount != ''">
+				settled_amount,
+			</if>
+			<if test="inter != null and inter != ''">
+				inter,
+			</if>
+			<if test="jobNo != null and jobNo != ''">
+				job_no,
+			</if>
+			<if test="levelVip != null and levelVip != ''">
+				level_vip,
+			</if>
+			<if test="parentId != null and parentId != ''">
+				parent_id,
+			</if>
+      		<if test="sex != null and '' != sex" >
+      			sex,
+      		</if>
+      		<if test="nickName != null and '' != nickName" >
+      			nick_name,
+      		</if>
+      		<if test="portrait != null and '' != portrait" >
+      			portrait,
+      		</if>
+      		<if test="openId != null and '' != openId" >
+      			open_id,
+      		</if>
+      		<if test="miniOpenId != null and '' != miniOpenId" >
+      			mini_open_id,
+      		</if>
+      		<if test="unionId != null and '' != unionId" >
+      			union_id,
+      		</if>
+      		<if test="bindWx != null and '' != bindWx" >
+      			bind_wx,
+      		</if>
+      		<if test="wxQrCode != null and '' != wxQrCode" >
+      			wx_qr_code,
+      		</if>
+      		<if test="posterUrl != null and '' != posterUrl" >
+      			poster_url,
+      		</if>
+      		<if test="miniQrCode != null and '' != miniQrCode" >
+      			mini_qr_code,
+      		</if>
+      		<if test="bindWeibo != null and '' != bindWeibo" >
+      			bind_weibo,
+      		</if>
+      		<if test="bindQq != null and '' != bindQq" >
+      			bind_qq,
+      		</if>
+      		<if test="lastLogintime != null" >
+      			last_logintime,
+      		</if>
+      		<if test="loginTimes != null" >
+      			login_times,
+      		</if>
+      		<if test="status != null and '' != status" >
+      			status,
+      		</if>
+      		<if test="userType != null and '' != userType" >
+      			user_type,
+      		</if>
+      		<if test="remark != null and '' != remark" >
+      			remark,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="account != null and '' != account" >
+	  			#{account,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="mobile != null and '' != mobile" >
+	  			#{mobile,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="email != null and '' != email" >
+	  			#{email,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="password != null and '' != password" >
+	  			#{password,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="tradePassword != null and '' != tradePassword" >
+	  			#{tradePassword,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="amount != null and '' != amount" >
+	  			#{amount,jdbcType=DECIMAL},
+	  		</if>
+	  		<if test="freezeAmount != null and freezeAmount != ''">
+				#{freezeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="marginAmount != null and marginAmount != ''">
+				#{marginAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="settledAmount != null and settledAmount != ''">
+				#{settledAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="inter != null and inter != ''">
+				#{inter,jdbcType=INTEGER},
+			</if>
+			<if test="jobNo != null and jobNo != ''">
+				#{jobNo,jdbcType=VARCHAR},
+			</if>
+			<if test="levelVip != null and levelVip != ''">
+				#{levelVip,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null and parentId != ''">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+      		<if test="sex != null and '' != sex" >
+	  			#{sex,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="nickName != null and '' != nickName" >
+	  			#{nickName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="portrait != null and '' != portrait" >
+	  			#{portrait,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="openId != null and '' != openId" >
+	  			#{openId,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="miniOpenId != null and '' != miniOpenId" >
+	  			#{miniOpenId,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="unionId != null and '' != unionId" >
+	  			#{unionId,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="bindWx != null and '' != bindWx" >
+	  			#{bindWx,jdbcType=VARCHAR},
+	  		</if>
+			<if test="wxQrCode != null and '' != wxQrCode" >
+	  			#{wxQrCode,jdbcType=VARCHAR},
+	  		</if>
+	  		<if test="posterUrl != null and '' != posterUrl" >
+	  			#{posterUrl,jdbcType=VARCHAR},
+	  		</if>
+	  		<if test="miniQrCode != null and '' != miniQrCode" >
+	  			#{miniQrCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="bindWeibo != null and '' != bindWeibo" >
+	  			#{bindWeibo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="bindQq != null and '' != bindQq" >
+	  			#{bindQq,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="lastLogintime != null" >
+	  			#{lastLogintime,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="loginTimes != null" >
+	  			#{loginTimes,jdbcType=INTEGER},
+	  		</if>
+      		<if test="status != null and '' != status" >
+	  			#{status,jdbcType=CHAR},
+	  		</if>
+      		<if test="userType != null and '' != userType" >
+	  			#{userType,jdbcType=CHAR},
+	  		</if>
+      		<if test="remark != null and '' != remark" >
+	  			#{remark,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+			
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" >
+    	update sys_front_account 
+	    <set >
+	      	<if test="account != null and '' != account" >
+	        	account = #{account,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="mobile != null and '' != mobile" >
+	        	mobile = #{mobile,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="email != null and '' != email" >
+	        	email = #{email,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="password != null and '' != password" >
+	        	password = #{password,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="tradePassword != null and '' != tradePassword" >
+	        	trade_password = #{tradePassword,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="amount != null" >
+	        	amount = #{amount,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="freezeAmount != null">
+				freeze_amount = #{freezeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="marginAmount != null">
+				margin_amount = #{marginAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="settledAmount != null and settledAmount != ''">
+				settled_amount = #{settledAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="inter != null and inter != ''">
+				inter = #{inter,jdbcType=INTEGER},
+			</if>
+			<if test="jobNo != null and jobNo != ''">
+				job_no = #{jobNo,jdbcType=VARCHAR},
+			</if>
+			<if test="levelVip != null and levelVip != ''">
+				level_vip = #{levelVip,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null and parentId != ''">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+	      	<if test="sex != null and '' != sex" >
+	        	sex = #{sex,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="nickName != null and '' != nickName" >
+	        	nick_name = #{nickName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="portrait != null and '' != portrait" >
+	        	portrait = #{portrait,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="openId != null and '' != openId" >
+	        	open_id = #{openId,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="miniOpenId != null and '' != miniOpenId" >
+	        	mini_open_id = #{miniOpenId,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="unionId != null and '' != unionId" >
+	        	union_id = #{unionId,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="bindWx != null and '' != bindWx" >
+	        	bind_wx = #{bindWx,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxQrCode != null and '' != wxQrCode" >
+	        	wx_qr_code = #{wxQrCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="posterUrl != null and '' != posterUrl" >
+	        	poster_url = #{posterUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="miniQrCode != null and '' != miniQrCode" >
+	        	mini_qr_code = #{miniQrCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="bindWeibo != null and '' != bindWeibo" >
+	        	bind_weibo = #{bindWeibo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="bindQq != null and '' != bindQq" >
+	        	bind_qq = #{bindQq,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="lastLogintime != null" >
+	        	last_logintime = #{lastLogintime,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="loginTimes != null" >
+	        	login_times = #{loginTimes,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="status != null and '' != status" >
+	        	status = #{status,jdbcType=CHAR},
+	      	</if>
+	      	<if test="userType != null and '' != userType" >
+	        	user_type = #{userType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="remark != null and '' != remark" >
+	        	remark = #{remark,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysFrontAccount" >
+    	update sys_front_account 
+    	set 
+      		id = #{id,jdbcType=INTEGER},
+			account = #{account,jdbcType=VARCHAR},
+			mobile = #{mobile,jdbcType=VARCHAR},
+			email = #{email,jdbcType=VARCHAR},
+			password = #{password,jdbcType=VARCHAR},
+			tradePassword = #{tradePassword,jdbcType=VARCHAR},
+			amount = #{amount,jdbcType=DECIMAL},
+			freeze_amount = #{freezeAmount,jdbcType=DECIMAL},
+			settled_amount = #{settledAmount,jdbcType=DECIMAL},
+			inter = #{inter,jdbcType=INTEGER},
+			job_no = #{jobNo,jdbcType=VARCHAR},
+			level_vip = #{levelVip,jdbcType=VARCHAR},
+			parent_id = #{parentId,jdbcType=INTEGER},
+			sex = #{sex,jdbcType=VARCHAR},
+			nick_name = #{nickName,jdbcType=VARCHAR},
+			portrait = #{portrait,jdbcType=VARCHAR},
+			open_id = #{openId,jdbcType=VARCHAR},
+			mini_open_id = #{miniOpenId,jdbcType=VARCHAR},
+			union_id = #{unionId,jdbcType=VARCHAR},
+			bind_wx = #{bindWx,jdbcType=VARCHAR},
+	        wx_qr_code = #{wxQrCode,jdbcType=VARCHAR},
+	        poster_url = #{posterUrl,jdbcType=VARCHAR},
+	        mini_qr_code = #{miniQrCode,jdbcType=VARCHAR},
+			bind_weibo = #{bindWeibo,jdbcType=VARCHAR},
+			bind_qq = #{bindQq,jdbcType=VARCHAR},
+			last_logintime = #{lastLogintime,jdbcType=TIMESTAMP},
+			login_times = #{loginTimes,jdbcType=INTEGER},
+			status = #{status,jdbcType=CHAR},
+			user_type = #{userType,jdbcType=CHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=CHAR}
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

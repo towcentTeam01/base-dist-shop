@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jms="http://www.springframework.org/schema/jms"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.1.xsd">
+	
+	<!-- 加载base工程配置 -->
+	<import resource="classpath*:META-INF/spring-base-jms.xml" />
+		
+	<!-- queue 队列定义 -->
+	<bean id="destinationQ" class="org.apache.activemq.command.ActiveMQQueue">  
+		<constructor-arg value="com.towcent.commerce.image.queue" />  
+	</bean>
+	<!-- 使用Spring JmsTemplate 的消息生产者 -->
+	<bean id="queueMessageProducer" class="com.towcent.dist.shop.app.server.mall.jms.ImageMessageProducer">
+		<property name="jmsTemplate" ref="jmsTemplate"></property>
+		<property name="notifyQueue" ref="destinationQ"></property>
+	</bean>
+	
+	<!-- 图片处理逻辑监听 -->
+	<bean id="imageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="errorHandler" ref="jmsErrorHandler"/>
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="destinationQ" />
+		<property name="messageListener" ref="imageConsumer" />
+		<property name="taskExecutor" ref="jmsThreadPoolExecutor" />
+		<property name="concurrency" value="${activemq.listener.concurrentConsumers}"></property>
+	</bean>
+	
+</beans>

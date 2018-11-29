@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+
+
+			http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 加载base工程配置 -->
+	<import resource="classpath*:META-INF/spring-base-dubbo-server.xml" />
+	
+	<!-- profiles.dubbo.address|profiles.dubbo.monitor maven打包参数 -->
+	<!-- ${dubbo.registry.address}/N/A -->
+	<dubbo:registry protocol="zookeeper" address="${profiles.dubbo.address}" file="${dubbo.registry.file}"/> 
+	
+	<!-- 监控 <dubbo:monitor protocol="registry" />
+	${profiles.dubbo.monitor} -->
+	
+	<!-- 声明需要暴露的服务接口  公开服务 
+	<dubbo:service interface="com.yougou.logistics.uc.common.interfaces.AuthorityUserApi" ref="authorityUserApi" version="${dubbo.api.version}"/>
+	-->
+	
+	<dubbo:service interface="com.towcent.dist.shop.app.client.sys.service.SysCommonApi" ref="sysCommonApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.sys.service.SessionApi" ref="sessionApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.sys.service.SysFrontAccountApi" ref="sysFrontAccountApiImpl" version="${dubbo.api.version}"/>
+
+	<dubbo:service interface="com.towcent.dist.shop.app.client.mall.sevice.GoodsApi" ref="goodsApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.mall.sevice.PayApi" ref="payApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.me.service.MeApi" ref="meApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.mall.sevice.CouponApi" ref="couponApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.mall.sevice.ShoppingCartApi" ref="shoppingCartApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.me.service.DistMemberApi" ref="distMemberApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.mall.sevice.OrderApi" ref="orderApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.me.service.BrokerageApi" ref="brokerageApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.me.service.WalletApi" ref="walletApiImpl" version="${dubbo.api.version}"/>
+	<dubbo:service interface="com.towcent.dist.shop.app.client.me.service.DistHelpApi" ref="distHelpApiImpl" version="${dubbo.api.version}"/>
+	
+	<dubbo:service interface="com.towcent.dist.shop.app.client.share.service.ShareApi" ref="shareApiImpl" version="${dubbo.api.version}"/>
+</beans>

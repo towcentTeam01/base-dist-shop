@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.config.dao.SysLevelConfDao">
+    
+	<sql id="sysLevelConfColumns">
+		a.id AS "id",
+		a.level_name AS "levelName",
+		a.level AS "level",
+		a.lock_fans AS "lockFans",
+		a.rec_order AS "recOrder",
+		a.pay_fee AS "payFee",
+		a.default_flag AS "defaultFlag",
+		a.direct_bkge AS "directBkge",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.merchant_id AS "merchantId"
+	</sql>
+	
+	<sql id="sysLevelConfJoins">
+	</sql>
+    
+	<select id="get" resultType="SysLevelConf">
+		SELECT 
+			<include refid="sysLevelConfColumns"/>
+		FROM sys_level_conf a
+		<include refid="sysLevelConfJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysLevelConf">
+		SELECT 
+			<include refid="sysLevelConfColumns"/>
+		FROM sys_level_conf a
+		<include refid="sysLevelConfJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="levelName != null and levelName != ''">
+				AND a.level_name = #{levelName}
+			</if>
+			<if test="level != null and level != ''">
+				AND a.level = #{level}
+			</if>
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysLevelConf">
+		SELECT 
+			<include refid="sysLevelConfColumns"/>
+		FROM sys_level_conf a
+		<include refid="sysLevelConfJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO sys_level_conf(
+					level_name,
+					level,
+					lock_fans,
+					rec_order,
+					pay_fee,
+					default_flag,
+					direct_bkge,
+					remarks,
+					create_by,
+					create_date,
+					update_by,
+					update_date,
+					del_flag,
+					merchant_id
+		) VALUES (
+			#{levelName},
+			#{level},
+			#{lockFans},
+			#{recOrder},
+			#{payFee},
+			#{defaultFlag},
+			#{directBkge},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{merchantId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO sys_level_conf 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="levelName != null">	
+				level_name,
+			</if>	
+			<if test="level != null">	
+				level,
+			</if>	
+			<if test="lockFans != null">	
+				lock_fans,
+			</if>	
+			<if test="recOrder != null">	
+				rec_order,
+			</if>	
+			<if test="payFee != null">	
+				pay_fee,
+			</if>	
+			<if test="defaultFlag != null">	
+				default_flag,
+			</if>	
+			<if test="directBkge != null">	
+				direct_bkge,
+			</if>	
+			<if test="remarks != null">	
+				remarks,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="createDate != null">	
+				create_date,
+			</if>	
+			<if test="updateBy.id != null">	
+				update_by,
+			</if>	
+			<if test="updateDate != null">	
+				update_date,
+			</if>	
+			<if test="delFlag != null">	
+				del_flag,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="levelName != null">
+				#{levelName},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+			<if test="lockFans != null">
+				#{lockFans},
+			</if>
+			<if test="recOrder != null">
+				#{recOrder},
+			</if>
+			<if test="payFee != null">
+				#{payFee},
+			</if>
+			<if test="defaultFlag != null">
+				#{defaultFlag},
+			</if>
+			<if test="directBkge != null">
+				#{directBkge},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateBy.id != null">
+				#{updateBy.id},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_level_conf SET 	
+			level_name = #{levelName},
+			level = #{level},
+			lock_fans = #{lockFans},
+			rec_order = #{recOrder},
+			pay_fee = #{payFee},
+			default_flag = #{defaultFlag},
+			direct_bkge = #{directBkge},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			merchant_id = #{merchantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE sys_level_conf  	
+		<set >		
+			<if test="levelName != null">	
+			level_name = #{levelName},
+			</if>
+			<if test="level != null">	
+			level = #{level},
+			</if>
+			<if test="lockFans != null">	
+			lock_fans = #{lockFans},
+			</if>
+			<if test="recOrder != null">	
+			rec_order = #{recOrder},
+			</if>
+			<if test="payFee != null">	
+			pay_fee = #{payFee},
+			</if>
+			<if test="defaultFlag != null">	
+			default_flag = #{defaultFlag},
+			</if>
+			<if test="directBkge != null">	
+			direct_bkge = #{directBkge},
+			</if>
+			<if test="remarks != null">	
+			remarks = #{remarks},
+			</if>
+			<if test="updateBy.id != null">	
+			update_by = #{updateBy.id},
+			</if>
+			<if test="updateDate != null">	
+			update_date = #{updateDate},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_level_conf SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

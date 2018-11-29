@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.share.dao.ShareInfoDao">
+    
+	<sql id="shareInfoColumns">
+		a.id AS "id",
+		a.job_no AS "jobNo",
+		a.create_by AS "createBy.id",
+		a.merchant_id AS "merchantId",
+		a.product_id AS "productId",
+		a.share_desc AS "shareDesc",
+		a.share_image AS "shareImage",
+		a.share_url AS "shareUrl",
+		a.create_date AS "createDate",
+		a.view_num AS "viewNum",
+		a.trade_num AS "tradeNum",
+		a.share_title AS "shareTitle",
+		u2.mobile AS "createBy1.mobile",
+		u2.nick_name AS "createBy1.nickName",
+		g.goods_no AS "goodsNo"
+	</sql>
+	
+	<sql id="shareInfoJoins">
+	    LEFT JOIN sys_front_account u2 ON u2.id = a.create_by 
+	    LEFT JOIN goods g on g.id=a.product_id
+	</sql>
+    
+	<select id="get" resultType="ShareInfo">
+		SELECT 
+			<include refid="shareInfoColumns"/>
+		FROM share_info a
+		<include refid="shareInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ShareInfo">
+		SELECT 
+			<include refid="shareInfoColumns"/>
+		FROM share_info a
+		<include refid="shareInfoJoins"/>
+		<where>
+			
+			<if test="jobNo != null and jobNo != ''">
+				AND a.job_no = #{jobNo}
+			</if>
+			<if test="shareDesc != null and shareDesc != ''">
+				AND a.share_desc = #{shareDesc}
+			</if>
+			<if test="shareTitle != null and shareTitle != ''">
+				AND a.share_title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{shareTitle}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{shareTitle}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{shareTitle},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			     ORDER BY a.create_date desc
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ShareInfo">
+		SELECT 
+			<include refid="shareInfoColumns"/>
+		FROM share_info a
+		<include refid="shareInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			    ORDER BY a.create_date desc
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO share_info(
+					job_no,
+					create_by,
+					merchant_id,
+					product_id,
+					share_desc,
+					share_image,
+					share_url,
+					create_date,
+					view_num,
+					trade_num,
+					share_title
+		) VALUES (
+			#{jobNo},
+			#{createBy.id},
+			#{merchantId},
+			#{productId},
+			#{shareDesc},
+			#{shareImage},
+			#{shareUrl},
+			#{createDate},
+			#{viewNum},
+			#{tradeNum},
+			#{shareTitle}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO share_info 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="jobNo != null">	
+				job_no,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+			<if test="productId != null">	
+				product_id,
+			</if>	
+			<if test="shareDesc != null">	
+				share_desc,
+			</if>	
+			<if test="shareImage != null">	
+				share_image,
+			</if>	
+			<if test="shareUrl != null">	
+				share_url,
+			</if>	
+			<if test="createDate != null">	
+				create_date,
+			</if>	
+			<if test="viewNum != null">	
+				view_num,
+			</if>	
+			<if test="tradeNum != null">	
+				trade_num,
+			</if>	
+			<if test="shareTitle != null">	
+				share_title,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="jobNo != null">
+				#{jobNo},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="shareDesc != null">
+				#{shareDesc},
+			</if>
+			<if test="shareImage != null">
+				#{shareImage},
+			</if>
+			<if test="shareUrl != null">
+				#{shareUrl},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="viewNum != null">
+				#{viewNum},
+			</if>
+			<if test="tradeNum != null">
+				#{tradeNum},
+			</if>
+			<if test="shareTitle != null">
+				#{shareTitle},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE share_info SET 	
+			job_no = #{jobNo},
+			merchant_id = #{merchantId},
+			product_id = #{productId},
+			share_desc = #{shareDesc},
+			share_image = #{shareImage},
+			share_url = #{shareUrl},
+			view_num = #{viewNum},
+			trade_num = #{tradeNum},
+			share_title = #{shareTitle}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE share_info  	
+		<set >		
+			<if test="jobNo != null">	
+			job_no = #{jobNo},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+			<if test="productId != null">	
+			product_id = #{productId},
+			</if>
+			<if test="shareDesc != null">	
+			share_desc = #{shareDesc},
+			</if>
+			<if test="shareImage != null">	
+			share_image = #{shareImage},
+			</if>
+			<if test="shareUrl != null">	
+			share_url = #{shareUrl},
+			</if>
+			<if test="viewNum != null">	
+			view_num = #{viewNum},
+			</if>
+			<if test="tradeNum != null">	
+			trade_num = #{tradeNum},
+			</if>
+			<if test="shareTitle != null">	
+			share_title = #{shareTitle},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM share_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.share.dao.ShareCategoryMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.share.dto.ShareCategory" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+		<result column="share_desc" property="shareDesc" jdbcType="VARCHAR" />
+		<result column="share_image" property="shareImage" jdbcType="VARCHAR" />
+		<result column="share_title" property="shareTitle" jdbcType="VARCHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="category_id" property="categoryId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.category_no, a.share_desc, a.share_image, a.share_title, a.merchant_id, a.category_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.categoryNo != null and '' != params.categoryNo" >
+        		and a.category_no like CONCAT('%',#{params.categoryNo,jdbcType=VARCHAR},'%')
+      		</if>
+      		<if test="params.shareDesc != null and '' != params.shareDesc" >
+        		and a.share_desc = #{params.shareDesc,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shareImage != null and '' != params.shareImage" >
+        		and a.share_image = #{params.shareImage,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shareTitle != null and '' != params.shareTitle" >
+        		and a.share_title = #{params.shareTitle,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.categoryId != null" >
+        		and a.category_id = #{params.categoryId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from share_category a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from share_category a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from share_category a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from share_category a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from share_category
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareCategory" >
+	  	delete from share_category
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareCategory" useGeneratedKeys="true" keyProperty="id">
+    	insert into share_category (
+					id,
+			category_no,
+			share_desc,
+			share_image,
+			share_title,
+			merchant_id,
+			category_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{categoryNo,jdbcType=VARCHAR},
+			#{shareDesc,jdbcType=VARCHAR},
+			#{shareImage,jdbcType=VARCHAR},
+			#{shareTitle,jdbcType=VARCHAR},
+			#{merchantId,jdbcType=INTEGER},
+			#{categoryId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareCategory" useGeneratedKeys="true" keyProperty="id" >
+    	insert into share_category 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="categoryNo != null and '' != categoryNo" >
+      			category_no,
+      		</if>
+      		<if test="shareDesc != null and '' != shareDesc" >
+      			share_desc,
+      		</if>
+      		<if test="shareImage != null and '' != shareImage" >
+      			share_image,
+      		</if>
+      		<if test="shareTitle != null and '' != shareTitle" >
+      			share_title,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+      		<if test="categoryId != null" >
+      			category_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="categoryNo != null and '' != categoryNo" >
+	  			#{categoryNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shareDesc != null and '' != shareDesc" >
+	  			#{shareDesc,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shareImage != null and '' != shareImage" >
+	  			#{shareImage,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shareTitle != null and '' != shareTitle" >
+	  			#{shareTitle,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="categoryId != null" >
+	  			#{categoryId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareCategory" >
+    	update share_category 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="categoryNo != null and '' != categoryNo" >
+	        	category_no = #{categoryNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shareDesc != null and '' != shareDesc" >
+	        	share_desc = #{shareDesc,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shareImage != null and '' != shareImage" >
+	        	share_image = #{shareImage,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shareTitle != null and '' != shareTitle" >
+	        	share_title = #{shareTitle,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="categoryId != null" >
+	        	category_id = #{categoryId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareCategory" >
+    	update share_category 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		category_no = #{categoryNo,jdbcType=VARCHAR},
+      		share_desc = #{shareDesc,jdbcType=VARCHAR},
+      		share_image = #{shareImage,jdbcType=VARCHAR},
+      		share_title = #{shareTitle,jdbcType=VARCHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER},
+      		category_id = #{categoryId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

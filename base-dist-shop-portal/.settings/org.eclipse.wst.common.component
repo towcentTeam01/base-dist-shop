@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="base-dist-shop-portal">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="base-dist-shop-dubbo-client-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/base-dist-shop-dubbo-client/base-dist-shop-dubbo-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="base-dist-shop-common-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/base-dist-shop-common/base-dist-shop-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pay-java-ali-2.0.6-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pay-java-ali/pay-java-ali">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pay-java-common-2.0.6-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pay-java-common/pay-java-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="base-dist-shop-portal"/>
+        <property name="java-output-path" value="/base-dist-shop-portal/target/classes"/>
+    </wb-module>
+</project-modules>

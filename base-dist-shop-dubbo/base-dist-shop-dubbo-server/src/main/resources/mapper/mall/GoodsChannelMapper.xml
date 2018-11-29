@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.GoodsChannelMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+		<result column="channel_type" property="channelType" jdbcType="CHAR" />
+		<result column="channel_alias" property="channelAlias" jdbcType="VARCHAR" />
+		<result column="goods_qty" property="goodsQty" jdbcType="INTEGER" />
+		<result column="channel_status" property="channelStatus" jdbcType="CHAR" />
+		<result column="sort" property="sort" jdbcType="SMALLINT" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="channel_img" property="channelImg" jdbcType="VARCHAR" />
+		<result column="channel_url" property="channelUrl" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.channel_name, a.channel_type, a.channel_alias, a.goods_qty, a.channel_status, a.sort, a.start_time, a.end_time, a.channel_img, a.channel_url, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.channelName != null and '' != params.channelName" >
+        		and a.channel_name = #{params.channelName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.channelType != null and '' != params.channelType" >
+        		and a.channel_type = #{params.channelType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.channelAlias != null and '' != params.channelAlias" >
+        		and a.channel_alias = #{params.channelAlias,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.goodsQty != null" >
+        		and a.goods_qty = #{params.goodsQty,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.channelStatus != null and '' != params.channelStatus" >
+        		and a.channel_status = #{params.channelStatus,jdbcType=CHAR}
+      		</if>
+      		<if test="params.sort != null" >
+        		and a.sort = #{params.sort,jdbcType=SMALLINT}
+      		</if>
+      		<if test="params.startTime != null" >
+        		and a.start_time = #{params.startTime,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.endTime != null" >
+        		and a.end_time = #{params.endTime,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.channelImg != null and '' != params.channelImg" >
+        		and a.channel_img = #{params.channelImg,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.channelUrl != null and '' != params.channelUrl" >
+        		and a.channel_url = #{params.channelUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_channel a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_channel a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from goods_channel a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from goods_channel a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from goods_channel
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" >
+	  	delete from goods_channel
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" useGeneratedKeys="true" keyProperty="id">
+    	insert into goods_channel (
+					id,
+			channel_name,
+			channel_type,
+			channel_alias,
+			goods_qty,
+			channel_status,
+			sort,
+			start_time,
+			end_time,
+			channel_img,
+			channel_url,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{channelName,jdbcType=VARCHAR},
+			#{channelType,jdbcType=CHAR},
+			#{channelAlias,jdbcType=VARCHAR},
+			#{goodsQty,jdbcType=INTEGER},
+			#{channelStatus,jdbcType=CHAR},
+			#{sort,jdbcType=SMALLINT},
+			#{startTime,jdbcType=TIMESTAMP},
+			#{endTime,jdbcType=TIMESTAMP},
+			#{channelImg,jdbcType=VARCHAR},
+			#{channelUrl,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" useGeneratedKeys="true" keyProperty="id" >
+    	insert into goods_channel 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="channelName != null and '' != channelName" >
+      			channel_name,
+      		</if>
+      		<if test="channelType != null and '' != channelType" >
+      			channel_type,
+      		</if>
+      		<if test="channelAlias != null and '' != channelAlias" >
+      			channel_alias,
+      		</if>
+      		<if test="goodsQty != null" >
+      			goods_qty,
+      		</if>
+      		<if test="channelStatus != null and '' != channelStatus" >
+      			channel_status,
+      		</if>
+      		<if test="sort != null" >
+      			sort,
+      		</if>
+      		<if test="startTime != null" >
+      			start_time,
+      		</if>
+      		<if test="endTime != null" >
+      			end_time,
+      		</if>
+      		<if test="channelImg != null and '' != channelImg" >
+      			channel_img,
+      		</if>
+      		<if test="channelUrl != null and '' != channelUrl" >
+      			channel_url,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="channelName != null and '' != channelName" >
+	  			#{channelName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="channelType != null and '' != channelType" >
+	  			#{channelType,jdbcType=CHAR},
+	  		</if>
+      		<if test="channelAlias != null and '' != channelAlias" >
+	  			#{channelAlias,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="goodsQty != null" >
+	  			#{goodsQty,jdbcType=INTEGER},
+	  		</if>
+      		<if test="channelStatus != null and '' != channelStatus" >
+	  			#{channelStatus,jdbcType=CHAR},
+	  		</if>
+      		<if test="sort != null" >
+	  			#{sort,jdbcType=SMALLINT},
+	  		</if>
+      		<if test="startTime != null" >
+	  			#{startTime,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="endTime != null" >
+	  			#{endTime,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="channelImg != null and '' != channelImg" >
+	  			#{channelImg,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="channelUrl != null and '' != channelUrl" >
+	  			#{channelUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" >
+    	update goods_channel 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="channelName != null and '' != channelName" >
+	        	channel_name = #{channelName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="channelType != null and '' != channelType" >
+	        	channel_type = #{channelType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="channelAlias != null and '' != channelAlias" >
+	        	channel_alias = #{channelAlias,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="goodsQty != null" >
+	        	goods_qty = #{goodsQty,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="channelStatus != null and '' != channelStatus" >
+	        	channel_status = #{channelStatus,jdbcType=CHAR},
+	      	</if>
+	      	<if test="sort != null" >
+	        	sort = #{sort,jdbcType=SMALLINT},
+	      	</if>
+	      	<if test="startTime != null" >
+	        	start_time = #{startTime,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="endTime != null" >
+	        	end_time = #{endTime,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="channelImg != null and '' != channelImg" >
+	        	channel_img = #{channelImg,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="channelUrl != null and '' != channelUrl" >
+	        	channel_url = #{channelUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsChannel" >
+    	update goods_channel 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		channel_name = #{channelName,jdbcType=VARCHAR},
+      		channel_type = #{channelType,jdbcType=CHAR},
+      		channel_alias = #{channelAlias,jdbcType=VARCHAR},
+      		goods_qty = #{goodsQty,jdbcType=INTEGER},
+      		channel_status = #{channelStatus,jdbcType=CHAR},
+      		sort = #{sort,jdbcType=SMALLINT},
+      		start_time = #{startTime,jdbcType=TIMESTAMP},
+      		end_time = #{endTime,jdbcType=TIMESTAMP},
+      		channel_img = #{channelImg,jdbcType=VARCHAR},
+      		channel_url = #{channelUrl,jdbcType=VARCHAR},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

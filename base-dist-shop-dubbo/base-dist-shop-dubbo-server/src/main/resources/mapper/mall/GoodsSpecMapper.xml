@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.GoodsSpecMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+		<result column="goods_type" property="goodsType" jdbcType="CHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.goods_id, a.goods_type, a.name, a.price, a.stock, a.unit, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.goodsId != null" >
+        		and a.goods_id = #{params.goodsId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.goodsType != null and '' != params.goodsType" >
+        		and a.goods_type = #{params.goodsType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.name != null and '' != params.name" >
+        		and a.name = #{params.name,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.price != null" >
+        		and a.price = #{params.price,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.stock != null" >
+        		and a.stock = #{params.stock,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.unit != null and '' != params.unit" >
+        		and a.unit = #{params.unit,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_spec a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_spec a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from goods_spec a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from goods_spec a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from goods_spec
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" >
+	  	delete from goods_spec
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" useGeneratedKeys="true" keyProperty="id">
+    	insert into goods_spec (
+					id,
+			goods_id,
+			goods_type,
+			name,
+			price,
+			stock,
+			unit,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{goodsId,jdbcType=INTEGER},
+			#{goodsType,jdbcType=CHAR},
+			#{name,jdbcType=VARCHAR},
+			#{price,jdbcType=DECIMAL},
+			#{stock,jdbcType=INTEGER},
+			#{unit,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" useGeneratedKeys="true" keyProperty="id" >
+    	insert into goods_spec 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="goodsId != null" >
+      			goods_id,
+      		</if>
+      		<if test="goodsType != null and '' != goodsType" >
+      			goods_type,
+      		</if>
+      		<if test="name != null and '' != name" >
+      			name,
+      		</if>
+      		<if test="price != null" >
+      			price,
+      		</if>
+      		<if test="stock != null" >
+      			stock,
+      		</if>
+      		<if test="unit != null and '' != unit" >
+      			unit,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="goodsId != null" >
+	  			#{goodsId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="goodsType != null and '' != goodsType" >
+	  			#{goodsType,jdbcType=CHAR},
+	  		</if>
+      		<if test="name != null and '' != name" >
+	  			#{name,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="price != null" >
+	  			#{price,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="stock != null" >
+	  			#{stock,jdbcType=INTEGER},
+	  		</if>
+      		<if test="unit != null and '' != unit" >
+	  			#{unit,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" >
+    	update goods_spec 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="goodsId != null" >
+	        	goods_id = #{goodsId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="goodsType != null and '' != goodsType" >
+	        	goods_type = #{goodsType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="name != null and '' != name" >
+	        	name = #{name,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="price != null" >
+	        	price = #{price,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="stock != null" >
+	        	stock = #{stock,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="unit != null and '' != unit" >
+	        	unit = #{unit,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsSpec" >
+    	update goods_spec 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		goods_id = #{goodsId,jdbcType=INTEGER},
+      		goods_type = #{goodsType,jdbcType=CHAR},
+      		name = #{name,jdbcType=VARCHAR},
+      		price = #{price,jdbcType=DECIMAL},
+      		stock = #{stock,jdbcType=INTEGER},
+      		unit = #{unit,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

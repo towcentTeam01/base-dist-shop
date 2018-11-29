@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.order.dao.OrderDtlDao">
+    
+	<sql id="orderDtlColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.goods_id AS "goodsId",
+		a.goods_name AS "goodsName",
+		a.goods_pic_url AS "goodsPicUrl",
+		a.spec AS "spec",
+		a.qty AS "qty",
+		a.price AS "price",
+		a.amount AS "amount",
+		a.integral AS "integral",
+		a.eval_flag AS "evalFlag",
+		a.merchant_id AS "merchantId",
+		a.spec_id AS "specId"
+	</sql>
+	
+	<sql id="orderDtlJoins">
+	</sql>
+    
+	<select id="get" resultType="OrderDtl">
+		SELECT 
+			<include refid="orderDtlColumns"/>
+		FROM order_dtl a
+		<include refid="orderDtlJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OrderDtl">
+		SELECT 
+			<include refid="orderDtlColumns"/>
+		FROM order_dtl a
+		<include refid="orderDtlJoins"/>
+		<where>
+			
+			<if test="orderId != null and orderId != ''">
+				AND a.order_id = #{orderId}
+			</if>
+			<if test="goodsId != null and goodsId != ''">
+				AND a.goods_id = #{goodsId}
+			</if>
+			<if test="evalFlag != null and evalFlag != ''">
+				AND a.eval_flag = #{evalFlag}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OrderDtl">
+		SELECT 
+			<include refid="orderDtlColumns"/>
+		FROM order_dtl a
+		<include refid="orderDtlJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO order_dtl(
+					order_id,
+					goods_id,
+					goods_name,
+					goods_pic_url,
+					spec,
+					qty,
+					price,
+					amount,
+					integral,
+					eval_flag,
+					merchant_id,
+					spec_id
+		) VALUES (
+			#{orderId},
+			#{goodsId},
+			#{goodsName},
+			#{goodsPicUrl},
+			#{spec},
+			#{qty},
+			#{price},
+			#{amount},
+			#{integral},
+			#{evalFlag},
+			#{merchantId},
+			#{specId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO order_dtl 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="orderId != null">	
+				order_id,
+			</if>	
+			<if test="goodsId != null">	
+				goods_id,
+			</if>	
+			<if test="goodsName != null">	
+				goods_name,
+			</if>	
+			<if test="goodsPicUrl != null">	
+				goods_pic_url,
+			</if>	
+			<if test="spec != null">	
+				spec,
+			</if>	
+			<if test="qty != null">	
+				qty,
+			</if>	
+			<if test="price != null">	
+				price,
+			</if>	
+			<if test="amount != null">	
+				amount,
+			</if>	
+			<if test="integral != null">	
+				integral,
+			</if>	
+			<if test="evalFlag != null">	
+				eval_flag,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+			<if test="specId != null">	
+				spec_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="orderId != null">
+				#{orderId},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName},
+			</if>
+			<if test="goodsPicUrl != null">
+				#{goodsPicUrl},
+			</if>
+			<if test="spec != null">
+				#{spec},
+			</if>
+			<if test="qty != null">
+				#{qty},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="amount != null">
+				#{amount},
+			</if>
+			<if test="integral != null">
+				#{integral},
+			</if>
+			<if test="evalFlag != null">
+				#{evalFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="specId != null">
+				#{specId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE order_dtl SET 	
+			order_id = #{orderId},
+			goods_id = #{goodsId},
+			goods_name = #{goodsName},
+			goods_pic_url = #{goodsPicUrl},
+			spec = #{spec},
+			qty = #{qty},
+			price = #{price},
+			amount = #{amount},
+			integral = #{integral},
+			eval_flag = #{evalFlag},
+			merchant_id = #{merchantId},
+			spec_id = #{specId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE order_dtl  	
+		<set >		
+			<if test="orderId != null">	
+			order_id = #{orderId},
+			</if>
+			<if test="goodsId != null">	
+			goods_id = #{goodsId},
+			</if>
+			<if test="goodsName != null">	
+			goods_name = #{goodsName},
+			</if>
+			<if test="goodsPicUrl != null">	
+			goods_pic_url = #{goodsPicUrl},
+			</if>
+			<if test="spec != null">	
+			spec = #{spec},
+			</if>
+			<if test="qty != null">	
+			qty = #{qty},
+			</if>
+			<if test="price != null">	
+			price = #{price},
+			</if>
+			<if test="amount != null">	
+			amount = #{amount},
+			</if>
+			<if test="integral != null">	
+			integral = #{integral},
+			</if>
+			<if test="evalFlag != null">	
+			eval_flag = #{evalFlag},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+			<if test="specId != null">	
+			spec_id = #{specId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM order_dtl
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

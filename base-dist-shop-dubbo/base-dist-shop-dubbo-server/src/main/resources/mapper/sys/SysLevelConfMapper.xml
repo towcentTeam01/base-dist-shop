@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.sys.dao.SysLevelConfMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="level_name" property="levelName" jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="CHAR" />
+		<result column="lock_fans" property="lockFans" jdbcType="INTEGER" />
+		<result column="rec_order" property="recOrder" jdbcType="INTEGER" />
+		<result column="pay_fee" property="payFee" jdbcType="DECIMAL" />
+		<result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+		<result column="direct_bkge" property="directBkge" jdbcType="DECIMAL" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.level_name, a.level, a.lock_fans, a.rec_order, a.pay_fee, a.default_flag, a.direct_bkge, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.levelName != null and '' != params.levelName" >
+        		and a.level_name = #{params.levelName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.level != null and '' != params.level" >
+        		and a.level = #{params.level,jdbcType=CHAR}
+      		</if>
+      		<if test="params.lockFans != null" >
+        		and a.lock_fans = #{params.lockFans,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.recOrder != null" >
+        		and a.rec_order = #{params.recOrder,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.payFee != null" >
+        		and a.pay_fee = #{params.payFee,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.defaultFlag != null and '' != params.defaultFlag" >
+        		and a.default_flag = #{params.defaultFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.directBkge != null" >
+        		and a.direct_bkge = #{params.directBkge,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_level_conf a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_level_conf a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_level_conf a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_level_conf a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_level_conf
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" >
+	  	delete from sys_level_conf
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_level_conf (
+					id,
+			level_name,
+			level,
+			lock_fans,
+			rec_order,
+			pay_fee,
+			default_flag,
+			direct_bkge,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{levelName,jdbcType=VARCHAR},
+			#{level,jdbcType=CHAR},
+			#{lockFans,jdbcType=INTEGER},
+			#{recOrder,jdbcType=INTEGER},
+			#{payFee,jdbcType=DECIMAL},
+			#{defaultFlag,jdbcType=CHAR},
+			#{directBkge,jdbcType=DECIMAL},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_level_conf 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="levelName != null and '' != levelName" >
+      			level_name,
+      		</if>
+      		<if test="level != null and '' != level" >
+      			level,
+      		</if>
+      		<if test="lockFans != null" >
+      			lock_fans,
+      		</if>
+      		<if test="recOrder != null" >
+      			rec_order,
+      		</if>
+      		<if test="payFee != null" >
+      			pay_fee,
+      		</if>
+      		<if test="defaultFlag != null and '' != defaultFlag" >
+      			default_flag,
+      		</if>
+      		<if test="directBkge != null" >
+      			direct_bkge,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="levelName != null and '' != levelName" >
+	  			#{levelName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="level != null and '' != level" >
+	  			#{level,jdbcType=CHAR},
+	  		</if>
+      		<if test="lockFans != null" >
+	  			#{lockFans,jdbcType=INTEGER},
+	  		</if>
+      		<if test="recOrder != null" >
+	  			#{recOrder,jdbcType=INTEGER},
+	  		</if>
+      		<if test="payFee != null" >
+	  			#{payFee,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="defaultFlag != null and '' != defaultFlag" >
+	  			#{defaultFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="directBkge != null" >
+	  			#{directBkge,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" >
+    	update sys_level_conf 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="levelName != null and '' != levelName" >
+	        	level_name = #{levelName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="level != null and '' != level" >
+	        	level = #{level,jdbcType=CHAR},
+	      	</if>
+	      	<if test="lockFans != null" >
+	        	lock_fans = #{lockFans,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="recOrder != null" >
+	        	rec_order = #{recOrder,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="payFee != null" >
+	        	pay_fee = #{payFee,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="defaultFlag != null and '' != defaultFlag" >
+	        	default_flag = #{defaultFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="directBkge != null" >
+	        	direct_bkge = #{directBkge,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysLevelConf" >
+    	update sys_level_conf 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		level_name = #{levelName,jdbcType=VARCHAR},
+      		level = #{level,jdbcType=CHAR},
+      		lock_fans = #{lockFans,jdbcType=INTEGER},
+      		rec_order = #{recOrder,jdbcType=INTEGER},
+      		pay_fee = #{payFee,jdbcType=DECIMAL},
+      		default_flag = #{defaultFlag,jdbcType=CHAR},
+      		direct_bkge = #{directBkge,jdbcType=DECIMAL},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

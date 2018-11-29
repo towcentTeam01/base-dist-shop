@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.CouponActMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.CouponAct" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="act_name" property="actName" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="DATE" />
+		<result column="end_time" property="endTime" jdbcType="DATE" />
+		<result column="act_type" property="actType" jdbcType="CHAR" />
+		<result column="limit_amount" property="limitAmount" jdbcType="DECIMAL" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="total_qty" property="totalQty" jdbcType="INTEGER" />
+		<result column="resid_qty" property="residQty" jdbcType="INTEGER" />
+		<result column="open_flag" property="openFlag" jdbcType="CHAR" />
+		<result column="act_url" property="actUrl" jdbcType="VARCHAR" />
+		<result column="act_qr_code" property="actQrCode" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.act_name, a.start_time, a.end_time, a.act_type, a.limit_amount, a.amount, a.total_qty, a.resid_qty, a.open_flag, a.act_url, a.act_qr_code, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.actName != null and '' != params.actName" >
+        		and a.act_name = #{params.actName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.startTime != null" >
+        		and a.start_time = #{params.startTime,jdbcType=DATE}
+      		</if>
+      		<if test="params.endTime != null" >
+        		and a.end_time = #{params.endTime,jdbcType=DATE}
+      		</if>
+      		<if test="params.actType != null and '' != params.actType" >
+        		and a.act_type = #{params.actType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.limitAmount != null" >
+        		and a.limit_amount = #{params.limitAmount,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.amount != null" >
+        		and a.amount = #{params.amount,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.totalQty != null" >
+        		and a.total_qty = #{params.totalQty,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.residQty != null" >
+        		and a.resid_qty = #{params.residQty,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.openFlag != null and '' != params.openFlag" >
+        		and a.open_flag = #{params.openFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.actUrl != null and '' != params.actUrl" >
+        		and a.act_url = #{params.actUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.actQrCode != null and '' != params.actQrCode" >
+        		and a.act_qr_code = #{params.actQrCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from coupon_act a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from coupon_act a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from coupon_act a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from coupon_act a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from coupon_act
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.CouponAct" >
+	  	delete from coupon_act
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.CouponAct" useGeneratedKeys="true" keyProperty="id">
+    	insert into coupon_act (
+					id,
+			act_name,
+			start_time,
+			end_time,
+			act_type,
+			limit_amount,
+			amount,
+			total_qty,
+			resid_qty,
+			open_flag,
+			act_url,
+			act_qr_code,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{actName,jdbcType=VARCHAR},
+			#{startTime,jdbcType=DATE},
+			#{endTime,jdbcType=DATE},
+			#{actType,jdbcType=CHAR},
+			#{limitAmount,jdbcType=DECIMAL},
+			#{amount,jdbcType=DECIMAL},
+			#{totalQty,jdbcType=INTEGER},
+			#{residQty,jdbcType=INTEGER},
+			#{openFlag,jdbcType=CHAR},
+			#{actUrl,jdbcType=VARCHAR},
+			#{actQrCode,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.CouponAct" useGeneratedKeys="true" keyProperty="id" >
+    	insert into coupon_act 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="actName != null and '' != actName" >
+      			act_name,
+      		</if>
+      		<if test="startTime != null" >
+      			start_time,
+      		</if>
+      		<if test="endTime != null" >
+      			end_time,
+      		</if>
+      		<if test="actType != null and '' != actType" >
+      			act_type,
+      		</if>
+      		<if test="limitAmount != null" >
+      			limit_amount,
+      		</if>
+      		<if test="amount != null" >
+      			amount,
+      		</if>
+      		<if test="totalQty != null" >
+      			total_qty,
+      		</if>
+      		<if test="residQty != null" >
+      			resid_qty,
+      		</if>
+      		<if test="openFlag != null and '' != openFlag" >
+      			open_flag,
+      		</if>
+      		<if test="actUrl != null and '' != actUrl" >
+      			act_url,
+      		</if>
+      		<if test="actQrCode != null and '' != actQrCode" >
+      			act_qr_code,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="actName != null and '' != actName" >
+	  			#{actName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="startTime != null" >
+	  			#{startTime,jdbcType=DATE},
+	  		</if>
+      		<if test="endTime != null" >
+	  			#{endTime,jdbcType=DATE},
+	  		</if>
+      		<if test="actType != null and '' != actType" >
+	  			#{actType,jdbcType=CHAR},
+	  		</if>
+      		<if test="limitAmount != null" >
+	  			#{limitAmount,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="amount != null" >
+	  			#{amount,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="totalQty != null" >
+	  			#{totalQty,jdbcType=INTEGER},
+	  		</if>
+      		<if test="residQty != null" >
+	  			#{residQty,jdbcType=INTEGER},
+	  		</if>
+      		<if test="openFlag != null and '' != openFlag" >
+	  			#{openFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="actUrl != null and '' != actUrl" >
+	  			#{actUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="actQrCode != null and '' != actQrCode" >
+	  			#{actQrCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.CouponAct" >
+    	update coupon_act 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="actName != null and '' != actName" >
+	        	act_name = #{actName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="startTime != null" >
+	        	start_time = #{startTime,jdbcType=DATE},
+	      	</if>
+	      	<if test="endTime != null" >
+	        	end_time = #{endTime,jdbcType=DATE},
+	      	</if>
+	      	<if test="actType != null and '' != actType" >
+	        	act_type = #{actType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="limitAmount != null" >
+	        	limit_amount = #{limitAmount,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="amount != null" >
+	        	amount = #{amount,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="totalQty != null" >
+	        	total_qty = #{totalQty,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="residQty != null" >
+	        	resid_qty = #{residQty,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="openFlag != null and '' != openFlag" >
+	        	open_flag = #{openFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="actUrl != null and '' != actUrl" >
+	        	act_url = #{actUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="actQrCode != null and '' != actQrCode" >
+	        	act_qr_code = #{actQrCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.CouponAct" >
+    	update coupon_act 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		act_name = #{actName,jdbcType=VARCHAR},
+      		start_time = #{startTime,jdbcType=DATE},
+      		end_time = #{endTime,jdbcType=DATE},
+      		act_type = #{actType,jdbcType=CHAR},
+      		limit_amount = #{limitAmount,jdbcType=DECIMAL},
+      		amount = #{amount,jdbcType=DECIMAL},
+      		total_qty = #{totalQty,jdbcType=INTEGER},
+      		resid_qty = #{residQty,jdbcType=INTEGER},
+      		open_flag = #{openFlag,jdbcType=CHAR},
+      		act_url = #{actUrl,jdbcType=VARCHAR},
+      		act_qr_code = #{actQrCode,jdbcType=VARCHAR},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

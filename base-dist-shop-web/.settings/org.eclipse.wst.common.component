@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="base-dist-shop-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="base-dist-shop-dubbo-client-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/base-dist-shop-dubbo-client/base-dist-shop-dubbo-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="base-dist-shop-common-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/base-dist-shop-common/base-dist-shop-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pay-java-ali-2.0.6-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pay-java-ali/pay-java-ali">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pay-java-common-2.0.6-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pay-java-common/pay-java-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="base-dist-shop-web"/>
+        <property name="java-output-path" value="/base-dist-shop-web/src/main/webapp/WEB-INF/classes"/>
+        <property name="component.exclusion.patterns" value="static/bootstrap/2.3.1/docs/**,static/ckeditor/_samples/**,static/ckeditor/_source/**,static/ckfinder/_samples/**,static/ckfinder/help/**,static/compressor*/**,static/jquery-jbox/2.3/docs/**,static/jquery-jbox/2.3/Skins2/**,static/jquery-ztree/3.5.12/demo/**,static/jquery-ztree/3.5.12/api/**,static/kindeditor/attached/**,static/kindeditor/examples/**,static/kindeditor/jsp/**,static/My97DatePicker/docs/**,static/supcan/doc/**,static/SuperSlide/demo/**,static/treeTable/demo/**,static/mCustomScrollbar/demo/**,static/jqGrid/4.6/demo/**,userfiles/**,test/**,WEB-INF/classes/org/apache/ibatis/**,WEB-INF/classes/org/mybatis/spring/**"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.OrderDtlMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_pic_url" property="goodsPicUrl" jdbcType="VARCHAR" />
+		<result column="spec" property="spec" jdbcType="VARCHAR" />
+		<result column="qty" property="qty" jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="integral" property="integral" jdbcType="DECIMAL" />
+		<result column="eval_flag" property="evalFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="spec_id" property="specId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.order_id, a.goods_id, a.goods_name, a.goods_pic_url, a.spec, a.qty, a.price, a.amount, a.integral, a.eval_flag, a.merchant_id, a.spec_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.orderId != null" >
+        		and a.order_id = #{params.orderId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.goodsId != null" >
+        		and a.goods_id = #{params.goodsId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.goodsName != null and '' != params.goodsName" >
+        		and a.goods_name = #{params.goodsName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.goodsPicUrl != null and '' != params.goodsPicUrl" >
+        		and a.goods_pic_url = #{params.goodsPicUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.spec != null and '' != params.spec" >
+        		and a.spec = #{params.spec,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.qty != null" >
+        		and a.qty = #{params.qty,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.price != null" >
+        		and a.price = #{params.price,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.amount != null" >
+        		and a.amount = #{params.amount,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.integral != null" >
+        		and a.integral = #{params.integral,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.evalFlag != null and '' != params.evalFlag" >
+        		and a.eval_flag = #{params.evalFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.specId != null" >
+        		and a.spec_id = #{params.specId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from order_dtl a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from order_dtl a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from order_dtl a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from order_dtl a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from order_dtl
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" >
+	  	delete from order_dtl
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" useGeneratedKeys="true" keyProperty="id">
+    	insert into order_dtl (
+					id,
+			order_id,
+			goods_id,
+			goods_name,
+			goods_pic_url,
+			spec,
+			qty,
+			price,
+			amount,
+			integral,
+			eval_flag,
+			merchant_id,
+			spec_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{orderId,jdbcType=INTEGER},
+			#{goodsId,jdbcType=INTEGER},
+			#{goodsName,jdbcType=VARCHAR},
+			#{goodsPicUrl,jdbcType=VARCHAR},
+			#{spec,jdbcType=VARCHAR},
+			#{qty,jdbcType=INTEGER},
+			#{price,jdbcType=DECIMAL},
+			#{amount,jdbcType=DECIMAL},
+			#{integral,jdbcType=DECIMAL},
+			#{evalFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER},
+			#{specId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" useGeneratedKeys="true" keyProperty="id" >
+    	insert into order_dtl 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="orderId != null" >
+      			order_id,
+      		</if>
+      		<if test="goodsId != null" >
+      			goods_id,
+      		</if>
+      		<if test="goodsName != null and '' != goodsName" >
+      			goods_name,
+      		</if>
+      		<if test="goodsPicUrl != null and '' != goodsPicUrl" >
+      			goods_pic_url,
+      		</if>
+      		<if test="spec != null and '' != spec" >
+      			spec,
+      		</if>
+      		<if test="qty != null" >
+      			qty,
+      		</if>
+      		<if test="price != null" >
+      			price,
+      		</if>
+      		<if test="amount != null" >
+      			amount,
+      		</if>
+      		<if test="integral != null" >
+      			integral,
+      		</if>
+      		<if test="evalFlag != null and '' != evalFlag" >
+      			eval_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+      		<if test="specId != null" >
+      			spec_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="orderId != null" >
+	  			#{orderId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="goodsId != null" >
+	  			#{goodsId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="goodsName != null and '' != goodsName" >
+	  			#{goodsName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="goodsPicUrl != null and '' != goodsPicUrl" >
+	  			#{goodsPicUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="spec != null and '' != spec" >
+	  			#{spec,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="qty != null" >
+	  			#{qty,jdbcType=INTEGER},
+	  		</if>
+      		<if test="price != null" >
+	  			#{price,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="amount != null" >
+	  			#{amount,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="integral != null" >
+	  			#{integral,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="evalFlag != null and '' != evalFlag" >
+	  			#{evalFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="specId != null" >
+	  			#{specId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" >
+    	update order_dtl 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="orderId != null" >
+	        	order_id = #{orderId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="goodsId != null" >
+	        	goods_id = #{goodsId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="goodsName != null and '' != goodsName" >
+	        	goods_name = #{goodsName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="goodsPicUrl != null and '' != goodsPicUrl" >
+	        	goods_pic_url = #{goodsPicUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="spec != null and '' != spec" >
+	        	spec = #{spec,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="qty != null" >
+	        	qty = #{qty,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="price != null" >
+	        	price = #{price,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="amount != null" >
+	        	amount = #{amount,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="integral != null" >
+	        	integral = #{integral,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="evalFlag != null and '' != evalFlag" >
+	        	eval_flag = #{evalFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="specId != null" >
+	        	spec_id = #{specId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.OrderDtl" >
+    	update order_dtl 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		order_id = #{orderId,jdbcType=INTEGER},
+      		goods_id = #{goodsId,jdbcType=INTEGER},
+      		goods_name = #{goodsName,jdbcType=VARCHAR},
+      		goods_pic_url = #{goodsPicUrl,jdbcType=VARCHAR},
+      		spec = #{spec,jdbcType=VARCHAR},
+      		qty = #{qty,jdbcType=INTEGER},
+      		price = #{price,jdbcType=DECIMAL},
+      		amount = #{amount,jdbcType=DECIMAL},
+      		integral = #{integral,jdbcType=DECIMAL},
+      		eval_flag = #{evalFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER},
+      		spec_id = #{specId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+
+	<sql id="mainCondition" >
+		<if test="null!=params" >
+			<if test="params.orderType != null and '' != params.orderType" >
+				and o.order_type = #{params.orderType,jdbcType=CHAR}
+			</if>
+			<if test="params.orderNo != null and '' != params.orderNo" >
+				and o.order_no = #{params.orderNo,jdbcType=VARCHAR}
+			</if>
+			<if test="params.orderStatus != null and '' != params.orderStatus" >
+				and o.order_status = #{params.orderStatus,jdbcType=CHAR}
+			</if>
+			<if test="params.payStatus != null and '' != params.payStatus" >
+				and o.pay_status = #{params.payStatus,jdbcType=CHAR}
+			</if>
+			<if test="params.payWay != null and '' != params.payWay" >
+				and o.pay_way = #{params.payWay,jdbcType=CHAR}
+			</if>
+			<if test="params.evalFlag != null and '' != params.evalFlag" >
+				and a.eval_flag = #{params.evalFlag,jdbcType=CHAR}
+			</if>
+			<if test="params.createBy != null" >
+				and o.create_by = #{params.createBy,jdbcType=INTEGER}
+			</if>
+
+			<!-- 会员查询状态标识 -->
+			<if test="params.tabFlag != null">
+				<if test="params.tabFlag==2">  <!-- 待付款 -->
+					and o.order_status = 1 and o.pay_status = 0
+				</if>
+				<if test="params.tabFlag==3">  <!-- 已支付 或者 待发货-->
+					and o.order_status = 1 and o.pay_status = 1
+				</if>
+				<if test="params.tabFlag==4">  <!-- 待收货 -->
+					and o.order_status = 2 and o.pay_status = 1
+				</if>
+				<if test="params.tabFlag==6">  <!-- 已完成 -->
+					and o.order_status = 4 and o.pay_status = 1
+				</if>
+				<if test="params.tabFlag==7">  <!-- 已取消 -->
+					and oorder_status = 5
+				</if>
+				<if test="params.tabFlag==5">  <!-- 待评价 -->
+					and o.order_status = 4 and a.is_eval = 0
+				</if>
+				<if test="params.tabFlag==9">  <!-- 待收款 -->
+					and o.pay_way = 0 and o.pay_status = 0 and o.order_status = 1
+				</if>
+				<if test="params.tabFlag==8">  <!-- 待回复 -->
+					and o.order_status = 4 and o.is_eval = 1
+				</if>
+				<if test="params.tabFlag==10">  <!-- 现金支付 -->
+					and o.pay_way = 0
+				</if>
+				<if test="params.tabFlag==11">  <!-- 线上支付 -->
+					and o.pay_way != 0
+				</if>
+			</if>
+
+		</if>
+	</sql>
+
+	<select id="selectEvalCount" resultType="java.lang.Integer" >
+		select count(1) as s from order_dtl a inner join order_main o on a.order_id = o.id
+		where 1=1
+		<include refid="mainCondition" />
+	</select>
+
+	<select id="selectEvalByPage" resultMap="BaseResultMap" parameterType="map" >
+		select
+		<include refid="Base_Column_List" />
+		from order_dtl a inner join order_main o on a.order_id = o.id
+		where 1=1
+		<include refid="mainCondition" />
+		limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+
+</mapper>

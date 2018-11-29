@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.sys.dao.SysMerchantInfoMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sys_user_id" property="sysUserId" jdbcType="INTEGER" />
+		<result column="house_number" property="houseNumber" jdbcType="VARCHAR" />
+		<result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+		<result column="shop_type" property="shopType" jdbcType="CHAR" />
+		<result column="apply_status" property="applyStatus" jdbcType="CHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="INTEGER" />
+		<result column="city" property="city" jdbcType="INTEGER" />
+		<result column="district" property="district" jdbcType="INTEGER" />
+		<result column="street" property="street" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="longtitude" property="longtitude" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="wx_code" property="wxCode" jdbcType="VARCHAR" />
+		<result column="wx_qr_code" property="wxQrCode" jdbcType="VARCHAR" />
+		<result column="service_phone" property="servicePhone" jdbcType="VARCHAR" />
+		<result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+		<result column="self_employed_name" property="selfEmployedName" jdbcType="VARCHAR" />
+		<result column="id_card_front_url" property="idCardFrontUrl" jdbcType="VARCHAR" />
+		<result column="apply_id_card" property="applyIdCard" jdbcType="VARCHAR" />
+		<result column="biz_lic_url" property="bizLicUrl" jdbcType="VARCHAR" />
+		<result column="cover_url" property="coverUrl" jdbcType="VARCHAR" />
+		<result column="id_card_back_url" property="idCardBackUrl" jdbcType="VARCHAR" />
+		<result column="hand_id_card_url" property="handIdCardUrl" jdbcType="VARCHAR" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="enabled_flag" property="enabledFlag" jdbcType="CHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.sys_user_id, a.house_number, a.shop_name, a.shop_type, a.apply_status, a.phone, a.logo, a.province, a.city, a.district, a.street, a.address, a.longtitude, a.latitude, a.email, a.qq, a.wx_code, a.wx_qr_code, a.service_phone, a.qr_code, a.self_employed_name, a.id_card_front_url, a.apply_id_card, a.biz_lic_url, a.cover_url, a.id_card_back_url, a.hand_id_card_url, a.alias, a.enabled_flag, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.sysUserId != null" >
+        		and a.sys_user_id = #{params.sysUserId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.houseNumber != null and '' != params.houseNumber" >
+        		and a.house_number = #{params.houseNumber,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shopName != null and '' != params.shopName" >
+        		and a.shop_name = #{params.shopName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shopType != null and '' != params.shopType" >
+        		and a.shop_type = #{params.shopType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.applyStatus != null and '' != params.applyStatus" >
+        		and a.apply_status = #{params.applyStatus,jdbcType=CHAR}
+      		</if>
+      		<if test="params.phone != null and '' != params.phone" >
+        		and a.phone = #{params.phone,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.logo != null and '' != params.logo" >
+        		and a.logo = #{params.logo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.province != null" >
+        		and a.province = #{params.province,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.city != null" >
+        		and a.city = #{params.city,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.district != null" >
+        		and a.district = #{params.district,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.street != null and '' != params.street" >
+        		and a.street = #{params.street,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.address != null and '' != params.address" >
+        		and a.address = #{params.address,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.longtitude != null and '' != params.longtitude" >
+        		and a.longtitude = #{params.longtitude,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.latitude != null and '' != params.latitude" >
+        		and a.latitude = #{params.latitude,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.email != null and '' != params.email" >
+        		and a.email = #{params.email,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.qq != null and '' != params.qq" >
+        		and a.qq = #{params.qq,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxCode != null and '' != params.wxCode" >
+        		and a.wx_code = #{params.wxCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxQrCode != null and '' != params.wxQrCode" >
+        		and a.wx_qr_code = #{params.wxQrCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.servicePhone != null and '' != params.servicePhone" >
+        		and a.service_phone = #{params.servicePhone,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.qrCode != null and '' != params.qrCode" >
+        		and a.qr_code = #{params.qrCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.selfEmployedName != null and '' != params.selfEmployedName" >
+        		and a.self_employed_name = #{params.selfEmployedName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.idCardFrontUrl != null and '' != params.idCardFrontUrl" >
+        		and a.id_card_front_url = #{params.idCardFrontUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.applyIdCard != null and '' != params.applyIdCard" >
+        		and a.apply_id_card = #{params.applyIdCard,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.bizLicUrl != null and '' != params.bizLicUrl" >
+        		and a.biz_lic_url = #{params.bizLicUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.coverUrl != null and '' != params.coverUrl" >
+        		and a.cover_url = #{params.coverUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.idCardBackUrl != null and '' != params.idCardBackUrl" >
+        		and a.id_card_back_url = #{params.idCardBackUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.handIdCardUrl != null and '' != params.handIdCardUrl" >
+        		and a.hand_id_card_url = #{params.handIdCardUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.alias != null and '' != params.alias" >
+        		and a.alias = #{params.alias,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.enabledFlag != null and '' != params.enabledFlag" >
+        		and a.enabled_flag = #{params.enabledFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_merchant_info a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_merchant_info a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_merchant_info a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_merchant_info a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_merchant_info
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" >
+	  	delete from sys_merchant_info
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_merchant_info (
+					id,
+			sys_user_id,
+			house_number,
+			shop_name,
+			shop_type,
+			apply_status,
+			phone,
+			logo,
+			province,
+			city,
+			district,
+			street,
+			address,
+			longtitude,
+			latitude,
+			email,
+			qq,
+			wx_code,
+			wx_qr_code,
+			service_phone,
+			qr_code,
+			self_employed_name,
+			id_card_front_url,
+			apply_id_card,
+			biz_lic_url,
+			cover_url,
+			id_card_back_url,
+			hand_id_card_url,
+			alias,
+			enabled_flag,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{sysUserId,jdbcType=INTEGER},
+			#{houseNumber,jdbcType=VARCHAR},
+			#{shopName,jdbcType=VARCHAR},
+			#{shopType,jdbcType=CHAR},
+			#{applyStatus,jdbcType=CHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{logo,jdbcType=VARCHAR},
+			#{province,jdbcType=INTEGER},
+			#{city,jdbcType=INTEGER},
+			#{district,jdbcType=INTEGER},
+			#{street,jdbcType=VARCHAR},
+			#{address,jdbcType=VARCHAR},
+			#{longtitude,jdbcType=VARCHAR},
+			#{latitude,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR},
+			#{qq,jdbcType=VARCHAR},
+			#{wxCode,jdbcType=VARCHAR},
+			#{wxQrCode,jdbcType=VARCHAR},
+			#{servicePhone,jdbcType=VARCHAR},
+			#{qrCode,jdbcType=VARCHAR},
+			#{selfEmployedName,jdbcType=VARCHAR},
+			#{idCardFrontUrl,jdbcType=VARCHAR},
+			#{applyIdCard,jdbcType=VARCHAR},
+			#{bizLicUrl,jdbcType=VARCHAR},
+			#{coverUrl,jdbcType=VARCHAR},
+			#{idCardBackUrl,jdbcType=VARCHAR},
+			#{handIdCardUrl,jdbcType=VARCHAR},
+			#{alias,jdbcType=VARCHAR},
+			#{enabledFlag,jdbcType=CHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_merchant_info 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="sysUserId != null" >
+      			sys_user_id,
+      		</if>
+      		<if test="houseNumber != null and '' != houseNumber" >
+      			house_number,
+      		</if>
+      		<if test="shopName != null and '' != shopName" >
+      			shop_name,
+      		</if>
+      		<if test="shopType != null and '' != shopType" >
+      			shop_type,
+      		</if>
+      		<if test="applyStatus != null and '' != applyStatus" >
+      			apply_status,
+      		</if>
+      		<if test="phone != null and '' != phone" >
+      			phone,
+      		</if>
+      		<if test="logo != null and '' != logo" >
+      			logo,
+      		</if>
+      		<if test="province != null" >
+      			province,
+      		</if>
+      		<if test="city != null" >
+      			city,
+      		</if>
+      		<if test="district != null" >
+      			district,
+      		</if>
+      		<if test="street != null and '' != street" >
+      			street,
+      		</if>
+      		<if test="address != null and '' != address" >
+      			address,
+      		</if>
+      		<if test="longtitude != null and '' != longtitude" >
+      			longtitude,
+      		</if>
+      		<if test="latitude != null and '' != latitude" >
+      			latitude,
+      		</if>
+      		<if test="email != null and '' != email" >
+      			email,
+      		</if>
+      		<if test="qq != null and '' != qq" >
+      			qq,
+      		</if>
+      		<if test="wxCode != null and '' != wxCode" >
+      			wx_code,
+      		</if>
+      		<if test="wxQrCode != null and '' != wxQrCode" >
+      			wx_qr_code,
+      		</if>
+      		<if test="servicePhone != null and '' != servicePhone" >
+      			service_phone,
+      		</if>
+      		<if test="qrCode != null and '' != qrCode" >
+      			qr_code,
+      		</if>
+      		<if test="selfEmployedName != null and '' != selfEmployedName" >
+      			self_employed_name,
+      		</if>
+      		<if test="idCardFrontUrl != null and '' != idCardFrontUrl" >
+      			id_card_front_url,
+      		</if>
+      		<if test="applyIdCard != null and '' != applyIdCard" >
+      			apply_id_card,
+      		</if>
+      		<if test="bizLicUrl != null and '' != bizLicUrl" >
+      			biz_lic_url,
+      		</if>
+      		<if test="coverUrl != null and '' != coverUrl" >
+      			cover_url,
+      		</if>
+      		<if test="idCardBackUrl != null and '' != idCardBackUrl" >
+      			id_card_back_url,
+      		</if>
+      		<if test="handIdCardUrl != null and '' != handIdCardUrl" >
+      			hand_id_card_url,
+      		</if>
+      		<if test="alias != null and '' != alias" >
+      			alias,
+      		</if>
+      		<if test="enabledFlag != null and '' != enabledFlag" >
+      			enabled_flag,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="sysUserId != null" >
+	  			#{sysUserId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="houseNumber != null and '' != houseNumber" >
+	  			#{houseNumber,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shopName != null and '' != shopName" >
+	  			#{shopName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shopType != null and '' != shopType" >
+	  			#{shopType,jdbcType=CHAR},
+	  		</if>
+      		<if test="applyStatus != null and '' != applyStatus" >
+	  			#{applyStatus,jdbcType=CHAR},
+	  		</if>
+      		<if test="phone != null and '' != phone" >
+	  			#{phone,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="logo != null and '' != logo" >
+	  			#{logo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="province != null" >
+	  			#{province,jdbcType=INTEGER},
+	  		</if>
+      		<if test="city != null" >
+	  			#{city,jdbcType=INTEGER},
+	  		</if>
+      		<if test="district != null" >
+	  			#{district,jdbcType=INTEGER},
+	  		</if>
+      		<if test="street != null and '' != street" >
+	  			#{street,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="address != null and '' != address" >
+	  			#{address,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="longtitude != null and '' != longtitude" >
+	  			#{longtitude,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="latitude != null and '' != latitude" >
+	  			#{latitude,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="email != null and '' != email" >
+	  			#{email,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="qq != null and '' != qq" >
+	  			#{qq,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxCode != null and '' != wxCode" >
+	  			#{wxCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxQrCode != null and '' != wxQrCode" >
+	  			#{wxQrCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="servicePhone != null and '' != servicePhone" >
+	  			#{servicePhone,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="qrCode != null and '' != qrCode" >
+	  			#{qrCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="selfEmployedName != null and '' != selfEmployedName" >
+	  			#{selfEmployedName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="idCardFrontUrl != null and '' != idCardFrontUrl" >
+	  			#{idCardFrontUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="applyIdCard != null and '' != applyIdCard" >
+	  			#{applyIdCard,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="bizLicUrl != null and '' != bizLicUrl" >
+	  			#{bizLicUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="coverUrl != null and '' != coverUrl" >
+	  			#{coverUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="idCardBackUrl != null and '' != idCardBackUrl" >
+	  			#{idCardBackUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="handIdCardUrl != null and '' != handIdCardUrl" >
+	  			#{handIdCardUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="alias != null and '' != alias" >
+	  			#{alias,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="enabledFlag != null and '' != enabledFlag" >
+	  			#{enabledFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" >
+    	update sys_merchant_info 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="sysUserId != null" >
+	        	sys_user_id = #{sysUserId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="houseNumber != null and '' != houseNumber" >
+	        	house_number = #{houseNumber,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shopName != null and '' != shopName" >
+	        	shop_name = #{shopName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shopType != null and '' != shopType" >
+	        	shop_type = #{shopType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="applyStatus != null and '' != applyStatus" >
+	        	apply_status = #{applyStatus,jdbcType=CHAR},
+	      	</if>
+	      	<if test="phone != null and '' != phone" >
+	        	phone = #{phone,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="logo != null and '' != logo" >
+	        	logo = #{logo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="province != null" >
+	        	province = #{province,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="city != null" >
+	        	city = #{city,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="district != null" >
+	        	district = #{district,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="street != null and '' != street" >
+	        	street = #{street,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="address != null and '' != address" >
+	        	address = #{address,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="longtitude != null and '' != longtitude" >
+	        	longtitude = #{longtitude,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="latitude != null and '' != latitude" >
+	        	latitude = #{latitude,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="email != null and '' != email" >
+	        	email = #{email,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="qq != null and '' != qq" >
+	        	qq = #{qq,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxCode != null and '' != wxCode" >
+	        	wx_code = #{wxCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxQrCode != null and '' != wxQrCode" >
+	        	wx_qr_code = #{wxQrCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="servicePhone != null and '' != servicePhone" >
+	        	service_phone = #{servicePhone,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="qrCode != null and '' != qrCode" >
+	        	qr_code = #{qrCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="selfEmployedName != null and '' != selfEmployedName" >
+	        	self_employed_name = #{selfEmployedName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="idCardFrontUrl != null and '' != idCardFrontUrl" >
+	        	id_card_front_url = #{idCardFrontUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="applyIdCard != null and '' != applyIdCard" >
+	        	apply_id_card = #{applyIdCard,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="bizLicUrl != null and '' != bizLicUrl" >
+	        	biz_lic_url = #{bizLicUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="coverUrl != null and '' != coverUrl" >
+	        	cover_url = #{coverUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="idCardBackUrl != null and '' != idCardBackUrl" >
+	        	id_card_back_url = #{idCardBackUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="handIdCardUrl != null and '' != handIdCardUrl" >
+	        	hand_id_card_url = #{handIdCardUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="alias != null and '' != alias" >
+	        	alias = #{alias,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="enabledFlag != null and '' != enabledFlag" >
+	        	enabled_flag = #{enabledFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysMerchantInfo" >
+    	update sys_merchant_info 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		sys_user_id = #{sysUserId,jdbcType=INTEGER},
+      		house_number = #{houseNumber,jdbcType=VARCHAR},
+      		shop_name = #{shopName,jdbcType=VARCHAR},
+      		shop_type = #{shopType,jdbcType=CHAR},
+      		apply_status = #{applyStatus,jdbcType=CHAR},
+      		phone = #{phone,jdbcType=VARCHAR},
+      		logo = #{logo,jdbcType=VARCHAR},
+      		province = #{province,jdbcType=INTEGER},
+      		city = #{city,jdbcType=INTEGER},
+      		district = #{district,jdbcType=INTEGER},
+      		street = #{street,jdbcType=VARCHAR},
+      		address = #{address,jdbcType=VARCHAR},
+      		longtitude = #{longtitude,jdbcType=VARCHAR},
+      		latitude = #{latitude,jdbcType=VARCHAR},
+      		email = #{email,jdbcType=VARCHAR},
+      		qq = #{qq,jdbcType=VARCHAR},
+      		wx_code = #{wxCode,jdbcType=VARCHAR},
+      		wx_qr_code = #{wxQrCode,jdbcType=VARCHAR},
+      		service_phone = #{servicePhone,jdbcType=VARCHAR},
+      		qr_code = #{qrCode,jdbcType=VARCHAR},
+      		self_employed_name = #{selfEmployedName,jdbcType=VARCHAR},
+      		id_card_front_url = #{idCardFrontUrl,jdbcType=VARCHAR},
+      		apply_id_card = #{applyIdCard,jdbcType=VARCHAR},
+      		biz_lic_url = #{bizLicUrl,jdbcType=VARCHAR},
+      		cover_url = #{coverUrl,jdbcType=VARCHAR},
+      		id_card_back_url = #{idCardBackUrl,jdbcType=VARCHAR},
+      		hand_id_card_url = #{handIdCardUrl,jdbcType=VARCHAR},
+      		alias = #{alias,jdbcType=VARCHAR},
+      		enabled_flag = #{enabledFlag,jdbcType=CHAR},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

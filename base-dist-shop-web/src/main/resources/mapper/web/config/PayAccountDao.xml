@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.config.dao.PayAccountDao">
+    
+	<sql id="payAccountColumns">
+		a.id AS "id",
+		a.pay_id AS "payId",
+		a.partner AS "partner",
+		a.appid AS "appid",
+		a.public_key AS "publicKey",
+		a.private_key AS "privateKey",
+		a.notify_url AS "notifyUrl",
+		a.return_url AS "returnUrl",
+		a.seller AS "seller",
+		a.sign_type AS "signType",
+		a.input_charset AS "inputCharset",
+		a.pay_type AS "payType",
+		a.msg_type AS "msgType",
+		a.is_test AS "isTest",
+		a.create_by AS "createBy.id",
+		a.create_time AS "createTime",
+		a.merchant_id AS "merchantId",
+		a.wx_remark AS "wxRemark"
+	</sql>
+	
+	<sql id="payAccountJoins">
+	</sql>
+    
+	<select id="get" resultType="PayAccount">
+		SELECT 
+			<include refid="payAccountColumns"/>
+		FROM pay_account a
+		<include refid="payAccountJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PayAccount">
+		SELECT 
+			<include refid="payAccountColumns"/>
+		FROM pay_account a
+		<include refid="payAccountJoins"/>
+		<where>
+			<if test="payId != null and payId != ''">
+				AND a.pay_id = #{payId}
+			</if>
+			<if test="partner != null and partner != ''">
+				AND a.partner = #{partner}
+			</if>
+			<if test="appid != null and appid != ''">
+				AND a.appid = #{appid}
+			</if>
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PayAccount">
+		SELECT 
+			<include refid="payAccountColumns"/>
+		FROM pay_account a
+		<include refid="payAccountJoins"/>
+		<where>
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO pay_account(
+					pay_id,
+					partner,
+					appid,
+					public_key,
+					private_key,
+					notify_url,
+					return_url,
+					seller,
+					sign_type,
+					input_charset,
+					pay_type,
+					msg_type,
+					is_test,
+					create_by,
+					create_time,
+					merchant_id,
+					wx_remark
+		) VALUES (
+			#{payId},
+			#{partner},
+			#{appid},
+			#{publicKey},
+			#{privateKey},
+			#{notifyUrl},
+			#{returnUrl},
+			#{seller},
+			#{signType},
+			#{inputCharset},
+			#{payType},
+			#{msgType},
+			#{isTest},
+			#{createBy.id},
+			#{createTime},
+			#{merchantId},
+			#{wxRemark}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO pay_account 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="payId != null">	
+				pay_id,
+			</if>	
+			<if test="partner != null">	
+				partner,
+			</if>	
+			<if test="appid != null">	
+				appid,
+			</if>	
+			<if test="publicKey != null">	
+				public_key,
+			</if>	
+			<if test="privateKey != null">	
+				private_key,
+			</if>	
+			<if test="notifyUrl != null">	
+				notify_url,
+			</if>	
+			<if test="returnUrl != null">	
+				return_url,
+			</if>	
+			<if test="seller != null">	
+				seller,
+			</if>	
+			<if test="signType != null">	
+				sign_type,
+			</if>	
+			<if test="inputCharset != null">	
+				input_charset,
+			</if>	
+			<if test="payType != null">	
+				pay_type,
+			</if>	
+			<if test="msgType != null">	
+				msg_type,
+			</if>	
+			<if test="isTest != null">	
+				is_test,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="createTime != null">	
+				create_time,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+			<if test="wxRemark != null">	
+				wx_remark,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="payId != null">
+				#{payId},
+			</if>
+			<if test="partner != null">
+				#{partner},
+			</if>
+			<if test="appid != null">
+				#{appid},
+			</if>
+			<if test="publicKey != null">
+				#{publicKey},
+			</if>
+			<if test="privateKey != null">
+				#{privateKey},
+			</if>
+			<if test="notifyUrl != null">
+				#{notifyUrl},
+			</if>
+			<if test="returnUrl != null">
+				#{returnUrl},
+			</if>
+			<if test="seller != null">
+				#{seller},
+			</if>
+			<if test="signType != null">
+				#{signType},
+			</if>
+			<if test="inputCharset != null">
+				#{inputCharset},
+			</if>
+			<if test="payType != null">
+				#{payType},
+			</if>
+			<if test="msgType != null">
+				#{msgType},
+			</if>
+			<if test="isTest != null">
+				#{isTest},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="wxRemark != null">
+				#{wxRemark},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE pay_account SET 	
+			pay_id = #{payId},
+			partner = #{partner},
+			appid = #{appid},
+			public_key = #{publicKey},
+			private_key = #{privateKey},
+			notify_url = #{notifyUrl},
+			return_url = #{returnUrl},
+			seller = #{seller},
+			sign_type = #{signType},
+			input_charset = #{inputCharset},
+			pay_type = #{payType},
+			msg_type = #{msgType},
+			is_test = #{isTest},
+			create_time = #{createTime},
+			merchant_id = #{merchantId},
+			wx_remark = #{wxRemark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE pay_account  	
+		<set >		
+			<if test="payId != null">	
+			pay_id = #{payId},
+			</if>
+			<if test="partner != null">	
+			partner = #{partner},
+			</if>
+			<if test="appid != null">	
+			appid = #{appid},
+			</if>
+			<if test="publicKey != null">	
+			public_key = #{publicKey},
+			</if>
+			<if test="privateKey != null">	
+			private_key = #{privateKey},
+			</if>
+			<if test="notifyUrl != null">	
+			notify_url = #{notifyUrl},
+			</if>
+			<if test="returnUrl != null">	
+			return_url = #{returnUrl},
+			</if>
+			<if test="seller != null">	
+			seller = #{seller},
+			</if>
+			<if test="signType != null">	
+			sign_type = #{signType},
+			</if>
+			<if test="inputCharset != null">	
+			input_charset = #{inputCharset},
+			</if>
+			<if test="payType != null">	
+			pay_type = #{payType},
+			</if>
+			<if test="msgType != null">	
+			msg_type = #{msgType},
+			</if>
+			<if test="isTest != null">	
+			is_test = #{isTest},
+			</if>
+			<if test="createTime != null">	
+			create_time = #{createTime},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+			<if test="wxRemark != null">	
+			wx_remark = #{wxRemark},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM pay_account
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

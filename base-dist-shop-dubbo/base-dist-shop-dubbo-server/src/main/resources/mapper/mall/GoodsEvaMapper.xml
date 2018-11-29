@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.GoodsEvaMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="order_dtl_id" property="orderDtlId" jdbcType="INTEGER" />
+		<result column="eva_content" property="evaContent" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="eva_urls" property="evaUrls" jdbcType="VARCHAR" />
+		<result column="eva_star" property="evaStar" jdbcType="CHAR" />
+		<result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+		<result column="reply_date" property="replyDate" jdbcType="TIMESTAMP" />
+		<result column="is_hide_name" property="isHideName" jdbcType="CHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.goods_id, a.order_id, a.order_dtl_id, a.eva_content, a.user_id, a.eva_urls, a.eva_star, a.reply_content, a.reply_date, a.is_hide_name, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.goodsId != null" >
+        		and a.goods_id = #{params.goodsId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.orderId != null" >
+        		and a.order_id = #{params.orderId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.orderDtlId != null" >
+        		and a.order_dtl_id = #{params.orderDtlId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.evaContent != null and '' != params.evaContent" >
+        		and a.eva_content = #{params.evaContent,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.userId != null" >
+        		and a.user_id = #{params.userId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.evaUrls != null and '' != params.evaUrls" >
+        		and a.eva_urls = #{params.evaUrls,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.evaStar != null and '' != params.evaStar" >
+        		and a.eva_star = #{params.evaStar,jdbcType=CHAR}
+      		</if>
+      		<if test="params.replyContent != null and '' != params.replyContent" >
+        		and a.reply_content = #{params.replyContent,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.replyDate != null" >
+        		and a.reply_date = #{params.replyDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.isHideName != null and '' != params.isHideName" >
+        		and a.is_hide_name = #{params.isHideName,jdbcType=CHAR}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_eva a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_eva a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from goods_eva a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from goods_eva a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from goods_eva
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" >
+	  	delete from goods_eva
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" useGeneratedKeys="true" keyProperty="id">
+    	insert into goods_eva (
+					id,
+			goods_id,
+			order_id,
+			order_dtl_id,
+			eva_content,
+			user_id,
+			eva_urls,
+			eva_star,
+			reply_content,
+			reply_date,
+			is_hide_name,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{goodsId,jdbcType=INTEGER},
+			#{orderId,jdbcType=INTEGER},
+			#{orderDtlId,jdbcType=INTEGER},
+			#{evaContent,jdbcType=VARCHAR},
+			#{userId,jdbcType=INTEGER},
+			#{evaUrls,jdbcType=VARCHAR},
+			#{evaStar,jdbcType=CHAR},
+			#{replyContent,jdbcType=VARCHAR},
+			#{replyDate,jdbcType=TIMESTAMP},
+			#{isHideName,jdbcType=CHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" useGeneratedKeys="true" keyProperty="id" >
+    	insert into goods_eva 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="goodsId != null" >
+      			goods_id,
+      		</if>
+      		<if test="orderId != null" >
+      			order_id,
+      		</if>
+      		<if test="orderDtlId != null" >
+      			order_dtl_id,
+      		</if>
+      		<if test="evaContent != null and '' != evaContent" >
+      			eva_content,
+      		</if>
+      		<if test="userId != null" >
+      			user_id,
+      		</if>
+      		<if test="evaUrls != null and '' != evaUrls" >
+      			eva_urls,
+      		</if>
+      		<if test="evaStar != null and '' != evaStar" >
+      			eva_star,
+      		</if>
+      		<if test="replyContent != null and '' != replyContent" >
+      			reply_content,
+      		</if>
+      		<if test="replyDate != null" >
+      			reply_date,
+      		</if>
+      		<if test="isHideName != null and '' != isHideName" >
+      			is_hide_name,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="goodsId != null" >
+	  			#{goodsId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="orderId != null" >
+	  			#{orderId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="orderDtlId != null" >
+	  			#{orderDtlId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="evaContent != null and '' != evaContent" >
+	  			#{evaContent,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="userId != null" >
+	  			#{userId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="evaUrls != null and '' != evaUrls" >
+	  			#{evaUrls,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="evaStar != null and '' != evaStar" >
+	  			#{evaStar,jdbcType=CHAR},
+	  		</if>
+      		<if test="replyContent != null and '' != replyContent" >
+	  			#{replyContent,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="replyDate != null" >
+	  			#{replyDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="isHideName != null and '' != isHideName" >
+	  			#{isHideName,jdbcType=CHAR},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" >
+    	update goods_eva 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="goodsId != null" >
+	        	goods_id = #{goodsId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="orderId != null" >
+	        	order_id = #{orderId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="orderDtlId != null" >
+	        	order_dtl_id = #{orderDtlId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="evaContent != null and '' != evaContent" >
+	        	eva_content = #{evaContent,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="userId != null" >
+	        	user_id = #{userId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="evaUrls != null and '' != evaUrls" >
+	        	eva_urls = #{evaUrls,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="evaStar != null and '' != evaStar" >
+	        	eva_star = #{evaStar,jdbcType=CHAR},
+	      	</if>
+	      	<if test="replyContent != null and '' != replyContent" >
+	        	reply_content = #{replyContent,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="replyDate != null" >
+	        	reply_date = #{replyDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="isHideName != null and '' != isHideName" >
+	        	is_hide_name = #{isHideName,jdbcType=CHAR},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsEva" >
+    	update goods_eva 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		goods_id = #{goodsId,jdbcType=INTEGER},
+      		order_id = #{orderId,jdbcType=INTEGER},
+      		order_dtl_id = #{orderDtlId,jdbcType=INTEGER},
+      		eva_content = #{evaContent,jdbcType=VARCHAR},
+      		user_id = #{userId,jdbcType=INTEGER},
+      		eva_urls = #{evaUrls,jdbcType=VARCHAR},
+      		eva_star = #{evaStar,jdbcType=CHAR},
+      		reply_content = #{replyContent,jdbcType=VARCHAR},
+      		reply_date = #{replyDate,jdbcType=TIMESTAMP},
+      		is_hide_name = #{isHideName,jdbcType=CHAR},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

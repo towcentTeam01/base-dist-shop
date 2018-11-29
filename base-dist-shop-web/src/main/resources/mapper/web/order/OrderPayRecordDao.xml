@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.order.dao.OrderPayRecordDao">
+    
+	<sql id="orderPayRecordColumns">
+		a.id AS "id",
+		a.pay_record_no AS "payRecordNo",
+		a.biz_type AS "bizType",
+		a.order_id AS "order.id",
+		o.order_no AS "order.orderNo",
+		a.pay_type AS "payType",
+		a.pay_date AS "payDate",
+		a.pay_amount AS "payAmount",
+		a.pay_status AS "payStatus",
+		a.balance_amount AS "balanceAmount",
+		a.inter_amount AS "interAmount",
+		a.gateway_amount AS "gatewayAmount",
+		a.third_pay_sn AS "thirdPaySn",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy1.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy1.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.merchant_id AS "merchantId",
+		u2.mobile AS "createBy1.mobile",
+		u2.nick_name AS "createBy1.nickName"
+	</sql>
+	
+	<sql id="orderPayRecordJoins">
+		LEFT JOIN sys_front_account u2 ON u2.id = a.create_by 
+		LEFT JOIN order_main o ON o.id = a.order_id 
+	</sql>
+    
+	<select id="get" resultType="OrderPayRecord">
+		SELECT 
+			<include refid="orderPayRecordColumns"/>
+		FROM order_pay_record a
+		<include refid="orderPayRecordJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OrderPayRecord">
+		SELECT 
+			<include refid="orderPayRecordColumns"/>
+		FROM order_pay_record a
+		<include refid="orderPayRecordJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="createBy1 != null and createBy1.id != null and createBy1.id != ''">
+				AND a.create_by = #{createBy1.id}
+			</if>
+			<if test="order != null and order.orderNo != null and order.orderNo != ''">
+				AND o.order_no LIKE 
+					<if test="dbName == 'oracle'">'%'||#{order.orderNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{order.orderNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{order.orderNo},'%')</if>
+			</if>
+			<if test="payRecordNo != null and payRecordNo != ''">
+				AND a.pay_record_no LIKE 
+					<if test="dbName == 'oracle'">'%'||#{payRecordNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{payRecordNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{payRecordNo},'%')</if>
+			</if>
+			<if test="bizType != null and bizType != ''">
+				AND a.biz_type = #{bizType}
+			</if>
+			<if test="payType != null and payType != ''">
+				AND a.pay_type = #{payType}
+			</if>
+			<if test="beginPayDate != null and endPayDate != null and beginPayDate != '' and endPayDate != ''">
+				AND a.pay_date BETWEEN #{beginPayDate} AND #{endPayDate}
+			</if>
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OrderPayRecord">
+		SELECT 
+			<include refid="orderPayRecordColumns"/>
+		FROM order_pay_record a
+		<include refid="orderPayRecordJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO order_pay_record(
+					pay_record_no,
+					biz_type,
+					order_id,
+					pay_type,
+					pay_date,
+					pay_amount,
+					pay_status,
+					balance_amount,
+					inter_amount,
+					gateway_amount,
+					third_pay_sn,
+					remarks,
+					create_by,
+					create_date,
+					update_by,
+					update_date,
+					del_flag,
+					merchant_id
+		) VALUES (
+			#{payRecordNo},
+			#{bizType},
+			#{orderId},
+			#{payType},
+			#{payDate},
+			#{payAmount},
+			#{payStatus},
+			#{balanceAmount},
+			#{interAmount},
+			#{gatewayAmount},
+			#{thirdPaySn},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{merchantId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO order_pay_record 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="payRecordNo != null">	
+				pay_record_no,
+			</if>	
+			<if test="bizType != null">	
+				biz_type,
+			</if>	
+			<if test="orderId != null">	
+				order_id,
+			</if>	
+			<if test="payType != null">	
+				pay_type,
+			</if>	
+			<if test="payDate != null">	
+				pay_date,
+			</if>	
+			<if test="payAmount != null">	
+				pay_amount,
+			</if>	
+			<if test="payStatus != null">	
+				pay_status,
+			</if>	
+			<if test="balanceAmount != null">	
+				balance_amount,
+			</if>	
+			<if test="interAmount != null">	
+				inter_amount,
+			</if>	
+			<if test="gatewayAmount != null">	
+				gateway_amount,
+			</if>	
+			<if test="thirdPaySn != null">	
+				third_pay_sn,
+			</if>	
+			<if test="remarks != null">	
+				remarks,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="createDate != null">	
+				create_date,
+			</if>	
+			<if test="updateBy.id != null">	
+				update_by,
+			</if>	
+			<if test="updateDate != null">	
+				update_date,
+			</if>	
+			<if test="delFlag != null">	
+				del_flag,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="payRecordNo != null">
+				#{payRecordNo},
+			</if>
+			<if test="bizType != null">
+				#{bizType},
+			</if>
+			<if test="orderId != null">
+				#{orderId},
+			</if>
+			<if test="payType != null">
+				#{payType},
+			</if>
+			<if test="payDate != null">
+				#{payDate},
+			</if>
+			<if test="payAmount != null">
+				#{payAmount},
+			</if>
+			<if test="payStatus != null">
+				#{payStatus},
+			</if>
+			<if test="balanceAmount != null">
+				#{balanceAmount},
+			</if>
+			<if test="interAmount != null">
+				#{interAmount},
+			</if>
+			<if test="gatewayAmount != null">
+				#{gatewayAmount},
+			</if>
+			<if test="thirdPaySn != null">
+				#{thirdPaySn},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateBy.id != null">
+				#{updateBy.id},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE order_pay_record SET 	
+			pay_record_no = #{payRecordNo},
+			biz_type = #{bizType},
+			order_id = #{orderId},
+			pay_type = #{payType},
+			pay_date = #{payDate},
+			pay_amount = #{payAmount},
+			pay_status = #{payStatus},
+			balance_amount = #{balanceAmount},
+			inter_amount = #{interAmount},
+			gateway_amount = #{gatewayAmount},
+			third_pay_sn = #{thirdPaySn},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			merchant_id = #{merchantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE order_pay_record  	
+		<set >		
+			<if test="payRecordNo != null">	
+			pay_record_no = #{payRecordNo},
+			</if>
+			<if test="bizType != null">	
+			biz_type = #{bizType},
+			</if>
+			<if test="orderId != null">	
+			order_id = #{orderId},
+			</if>
+			<if test="payType != null">	
+			pay_type = #{payType},
+			</if>
+			<if test="payDate != null">	
+			pay_date = #{payDate},
+			</if>
+			<if test="payAmount != null">	
+			pay_amount = #{payAmount},
+			</if>
+			<if test="payStatus != null">	
+			pay_status = #{payStatus},
+			</if>
+			<if test="balanceAmount != null">	
+			balance_amount = #{balanceAmount},
+			</if>
+			<if test="interAmount != null">	
+			inter_amount = #{interAmount},
+			</if>
+			<if test="gatewayAmount != null">	
+			gateway_amount = #{gatewayAmount},
+			</if>
+			<if test="thirdPaySn != null">	
+			third_pay_sn = #{thirdPaySn},
+			</if>
+			<if test="remarks != null">	
+			remarks = #{remarks},
+			</if>
+			<if test="updateBy.id != null">	
+			update_by = #{updateBy.id},
+			</if>
+			<if test="updateDate != null">	
+			update_date = #{updateDate},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE order_pay_record SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

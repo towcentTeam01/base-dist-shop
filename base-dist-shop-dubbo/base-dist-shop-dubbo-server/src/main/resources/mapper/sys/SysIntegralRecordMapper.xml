@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.sys.dao.SysIntegralRecordMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="deal_no" property="dealNo" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="CHAR" />
+		<result column="integral" property="integral" jdbcType="INTEGER" />
+		<result column="integral_after" property="integralAfter" jdbcType="INTEGER" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.user_id, a.deal_no, a.type, a.integral, a.integral_after, a.remarks, a.create_date, a.merchant_id, a.del_flag
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.userId != null" >
+        		and a.user_id = #{params.userId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.dealNo != null and '' != params.dealNo" >
+        		and a.deal_no = #{params.dealNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.type != null and '' != params.type" >
+        		and a.type = #{params.type,jdbcType=CHAR}
+      		</if>
+      		<if test="params.integral != null" >
+        		and a.integral = #{params.integral,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.integralAfter != null" >
+        		and a.integral_after = #{params.integralAfter,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_integral_record a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_integral_record a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_integral_record a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_integral_record a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_integral_record
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" >
+	  	delete from sys_integral_record
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_integral_record (
+					id,
+			user_id,
+			deal_no,
+			type,
+			integral,
+			integral_after,
+			remarks,
+			create_date,
+			merchant_id,
+			del_flag
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{userId,jdbcType=INTEGER},
+			#{dealNo,jdbcType=VARCHAR},
+			#{type,jdbcType=CHAR},
+			#{integral,jdbcType=INTEGER},
+			#{integralAfter,jdbcType=INTEGER},
+			#{remarks,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{merchantId,jdbcType=INTEGER},
+			#{delFlag,jdbcType=CHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_integral_record 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="userId != null" >
+      			user_id,
+      		</if>
+      		<if test="dealNo != null and '' != dealNo" >
+      			deal_no,
+      		</if>
+      		<if test="type != null and '' != type" >
+      			type,
+      		</if>
+      		<if test="integral != null" >
+      			integral,
+      		</if>
+      		<if test="integralAfter != null" >
+      			integral_after,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="userId != null" >
+	  			#{userId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="dealNo != null and '' != dealNo" >
+	  			#{dealNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="type != null and '' != type" >
+	  			#{type,jdbcType=CHAR},
+	  		</if>
+      		<if test="integral != null" >
+	  			#{integral,jdbcType=INTEGER},
+	  		</if>
+      		<if test="integralAfter != null" >
+	  			#{integralAfter,jdbcType=INTEGER},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" >
+    	update sys_integral_record 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="userId != null" >
+	        	user_id = #{userId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="dealNo != null and '' != dealNo" >
+	        	deal_no = #{dealNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="type != null and '' != type" >
+	        	type = #{type,jdbcType=CHAR},
+	      	</if>
+	      	<if test="integral != null" >
+	        	integral = #{integral,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="integralAfter != null" >
+	        	integral_after = #{integralAfter,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.sys.dto.SysIntegralRecord" >
+    	update sys_integral_record 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		user_id = #{userId,jdbcType=INTEGER},
+      		deal_no = #{dealNo,jdbcType=VARCHAR},
+      		type = #{type,jdbcType=CHAR},
+      		integral = #{integral,jdbcType=INTEGER},
+      		integral_after = #{integralAfter,jdbcType=INTEGER},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		merchant_id = #{merchantId,jdbcType=INTEGER},
+      		del_flag = #{delFlag,jdbcType=CHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

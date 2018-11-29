@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.share.dao.ShareInfoMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.share.dto.ShareInfo" >
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="job_no" property="jobNo" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="product_id" property="productId" jdbcType="INTEGER" />
+		<result column="share_desc" property="shareDesc" jdbcType="VARCHAR" />
+		<result column="share_image" property="shareImage" jdbcType="VARCHAR" />
+		<result column="share_url" property="shareUrl" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="view_num" property="viewNum" jdbcType="INTEGER" />
+		<result column="trade_num" property="tradeNum" jdbcType="INTEGER" />
+		<result column="share_title" property="shareTitle" jdbcType="VARCHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.job_no, a.create_by, a.merchant_id, a.product_id, a.share_desc, a.share_image, a.share_url, a.create_date, a.view_num, a.trade_num, a.share_title
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=BIGINT}
+      		</if>
+      		<if test="params.jobNo != null and '' != params.jobNo" >
+        		and a.job_no = #{params.jobNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.productId != null" >
+        		and a.product_id = #{params.productId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.shareDesc != null and '' != params.shareDesc" >
+        		and a.share_desc = #{params.shareDesc,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shareImage != null and '' != params.shareImage" >
+        		and a.share_image = #{params.shareImage,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.shareUrl != null and '' != params.shareUrl" >
+        		and a.share_url = #{params.shareUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.viewNum != null" >
+        		and a.view_num = #{params.viewNum,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.tradeNum != null" >
+        		and a.trade_num = #{params.tradeNum,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.shareTitle != null and '' != params.shareTitle" >
+        		and a.share_title = #{params.shareTitle,jdbcType=VARCHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from share_info a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from share_info a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from share_info a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from share_info a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from share_info
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareInfo" >
+	  	delete from share_info
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareInfo" useGeneratedKeys="true" keyProperty="id">
+    	insert into share_info (
+					id,
+			job_no,
+			create_by,
+			merchant_id,
+			product_id,
+			share_desc,
+			share_image,
+			share_url,
+			create_date,
+			view_num,
+			trade_num,
+			share_title
+    	)
+    	values (
+					#{id,jdbcType=BIGINT},
+			#{jobNo,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{merchantId,jdbcType=INTEGER},
+			#{productId,jdbcType=INTEGER},
+			#{shareDesc,jdbcType=VARCHAR},
+			#{shareImage,jdbcType=VARCHAR},
+			#{shareUrl,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{viewNum,jdbcType=INTEGER},
+			#{tradeNum,jdbcType=INTEGER},
+			#{shareTitle,jdbcType=VARCHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareInfo" useGeneratedKeys="true" keyProperty="id" >
+    	insert into share_info 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="jobNo != null and '' != jobNo" >
+      			job_no,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+      		<if test="productId != null" >
+      			product_id,
+      		</if>
+      		<if test="shareDesc != null and '' != shareDesc" >
+      			share_desc,
+      		</if>
+      		<if test="shareImage != null and '' != shareImage" >
+      			share_image,
+      		</if>
+      		<if test="shareUrl != null and '' != shareUrl" >
+      			share_url,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="viewNum != null" >
+      			view_num,
+      		</if>
+      		<if test="tradeNum != null" >
+      			trade_num,
+      		</if>
+      		<if test="shareTitle != null and '' != shareTitle" >
+      			share_title,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=BIGINT},
+	  		</if>
+      		<if test="jobNo != null and '' != jobNo" >
+	  			#{jobNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="productId != null" >
+	  			#{productId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="shareDesc != null and '' != shareDesc" >
+	  			#{shareDesc,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shareImage != null and '' != shareImage" >
+	  			#{shareImage,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="shareUrl != null and '' != shareUrl" >
+	  			#{shareUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="viewNum != null" >
+	  			#{viewNum,jdbcType=INTEGER},
+	  		</if>
+      		<if test="tradeNum != null" >
+	  			#{tradeNum,jdbcType=INTEGER},
+	  		</if>
+      		<if test="shareTitle != null and '' != shareTitle" >
+	  			#{shareTitle,jdbcType=VARCHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareInfo" >
+    	update share_info 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=BIGINT},
+	      	</if>
+	      	<if test="jobNo != null and '' != jobNo" >
+	        	job_no = #{jobNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="productId != null" >
+	        	product_id = #{productId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="shareDesc != null and '' != shareDesc" >
+	        	share_desc = #{shareDesc,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shareImage != null and '' != shareImage" >
+	        	share_image = #{shareImage,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="shareUrl != null and '' != shareUrl" >
+	        	share_url = #{shareUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="viewNum != null" >
+	        	view_num = #{viewNum,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="tradeNum != null" >
+	        	trade_num = #{tradeNum,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="shareTitle != null and '' != shareTitle" >
+	        	share_title = #{shareTitle,jdbcType=VARCHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.share.dto.ShareInfo" >
+    	update share_info 
+    	set 
+      	      		id = #{id,jdbcType=BIGINT},
+      		job_no = #{jobNo,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		merchant_id = #{merchantId,jdbcType=INTEGER},
+      		product_id = #{productId,jdbcType=INTEGER},
+      		share_desc = #{shareDesc,jdbcType=VARCHAR},
+      		share_image = #{shareImage,jdbcType=VARCHAR},
+      		share_url = #{shareUrl,jdbcType=VARCHAR},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		view_num = #{viewNum,jdbcType=INTEGER},
+      		trade_num = #{tradeNum,jdbcType=INTEGER},
+      		share_title = #{shareTitle,jdbcType=VARCHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

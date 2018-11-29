@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.dist.shop.app.server.mall.dao.GoodsCategoryMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+		<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="INTEGER" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="structure_no" property="structureNo" jdbcType="VARCHAR" />
+		<result column="structure_name" property="structureName" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="category_icon" property="categoryIcon" jdbcType="VARCHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.category_no, a.category_name, a.level, a.parent_id, a.structure_no, a.structure_name, a.sort, a.parent_ids, a.remarks, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id, a.category_icon
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.categoryNo != null and '' != params.categoryNo" >
+        		and a.category_no = #{params.categoryNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.categoryName != null and '' != params.categoryName" >
+        		and a.category_name = #{params.categoryName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.level != null" >
+        		and a.level = #{params.level,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.parentId != null" >
+        		and a.parent_id = #{params.parentId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.structureNo != null and '' != params.structureNo" >
+        		and a.structure_no = #{params.structureNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.structureName != null and '' != params.structureName" >
+        		and a.structure_name = #{params.structureName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.sort != null" >
+        		and a.sort = #{params.sort,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.parentIds != null and '' != params.parentIds" >
+        		and a.parent_ids = #{params.parentIds,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.categoryIcon != null and '' != params.categoryIcon" >
+        		and a.category_icon = #{params.categoryIcon,jdbcType=VARCHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_category a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from goods_category a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from goods_category a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from goods_category a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from goods_category
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" >
+	  	delete from goods_category
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" useGeneratedKeys="true" keyProperty="id">
+    	insert into goods_category (
+					id,
+			category_no,
+			category_name,
+			level,
+			parent_id,
+			structure_no,
+			structure_name,
+			sort,
+			parent_ids,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id,
+			category_icon
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{categoryNo,jdbcType=VARCHAR},
+			#{categoryName,jdbcType=VARCHAR},
+			#{level,jdbcType=INTEGER},
+			#{parentId,jdbcType=INTEGER},
+			#{structureNo,jdbcType=VARCHAR},
+			#{structureName,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			#{parentIds,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER},
+			#{categoryIcon,jdbcType=VARCHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" useGeneratedKeys="true" keyProperty="id" >
+    	insert into goods_category 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="categoryNo != null and '' != categoryNo" >
+      			category_no,
+      		</if>
+      		<if test="categoryName != null and '' != categoryName" >
+      			category_name,
+      		</if>
+      		<if test="level != null" >
+      			level,
+      		</if>
+      		<if test="parentId != null" >
+      			parent_id,
+      		</if>
+      		<if test="structureNo != null and '' != structureNo" >
+      			structure_no,
+      		</if>
+      		<if test="structureName != null and '' != structureName" >
+      			structure_name,
+      		</if>
+      		<if test="sort != null" >
+      			sort,
+      		</if>
+      		<if test="parentIds != null and '' != parentIds" >
+      			parent_ids,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+      		<if test="categoryIcon != null and '' != categoryIcon" >
+      			category_icon,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="categoryNo != null and '' != categoryNo" >
+	  			#{categoryNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="categoryName != null and '' != categoryName" >
+	  			#{categoryName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="level != null" >
+	  			#{level,jdbcType=INTEGER},
+	  		</if>
+      		<if test="parentId != null" >
+	  			#{parentId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="structureNo != null and '' != structureNo" >
+	  			#{structureNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="structureName != null and '' != structureName" >
+	  			#{structureName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="sort != null" >
+	  			#{sort,jdbcType=INTEGER},
+	  		</if>
+      		<if test="parentIds != null and '' != parentIds" >
+	  			#{parentIds,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+      		<if test="categoryIcon != null and '' != categoryIcon" >
+	  			#{categoryIcon,jdbcType=VARCHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" >
+    	update goods_category 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="categoryNo != null and '' != categoryNo" >
+	        	category_no = #{categoryNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="categoryName != null and '' != categoryName" >
+	        	category_name = #{categoryName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="level != null" >
+	        	level = #{level,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="parentId != null" >
+	        	parent_id = #{parentId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="structureNo != null and '' != structureNo" >
+	        	structure_no = #{structureNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="structureName != null and '' != structureName" >
+	        	structure_name = #{structureName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="sort != null" >
+	        	sort = #{sort,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="parentIds != null and '' != parentIds" >
+	        	parent_ids = #{parentIds,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="categoryIcon != null and '' != categoryIcon" >
+	        	category_icon = #{categoryIcon,jdbcType=VARCHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.dist.shop.app.client.mall.dto.GoodsCategory" >
+    	update goods_category 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		category_no = #{categoryNo,jdbcType=VARCHAR},
+      		category_name = #{categoryName,jdbcType=VARCHAR},
+      		level = #{level,jdbcType=INTEGER},
+      		parent_id = #{parentId,jdbcType=INTEGER},
+      		structure_no = #{structureNo,jdbcType=VARCHAR},
+      		structure_name = #{structureName,jdbcType=VARCHAR},
+      		sort = #{sort,jdbcType=INTEGER},
+      		parent_ids = #{parentIds,jdbcType=VARCHAR},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		create_by = #{createBy,jdbcType=INTEGER},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=INTEGER},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		del_flag = #{delFlag,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER},
+      		category_icon = #{categoryIcon,jdbcType=VARCHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

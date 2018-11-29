@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.goods.dao.GoodsCategoryDao">
+    
+	<sql id="goodsCategoryColumns">
+		a.id AS "id",
+		a.category_no AS "categoryNo",
+		a.category_name AS "categoryName",
+		a.level AS "level",
+		a.parent_id AS "parent.id",
+		a.structure_no AS "structureNo",
+		a.structure_name AS "structureName",
+		a.sort AS "sort",
+		a.parent_ids AS "parentIds",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		p.category_name AS "parent.category_name",
+		a.merchant_id AS "merchantId",
+		a.category_icon AS "categoryIcon"
+	</sql>
+	
+	<sql id="goodsCategoryJoins">
+		LEFT JOIN goods_category p ON p.id = a.parent_id
+	</sql>
+    
+	<select id="get" resultType="GoodsCategory">
+		SELECT 
+			<include refid="goodsCategoryColumns"/>
+		FROM goods_category a
+		<include refid="goodsCategoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<!-- <select id="getByStructureNo" resultType="GoodsCategory">
+		select  
+		   <if test="dbName == 'mssql'"> top 1 </if> a.id AS "id",a.category_name AS "categoryName"
+		from goods_category a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.structure_no=#{structureNo} AND a.merchant_id = #{merchantId}
+		order by a.update_date desc
+		<if test="dbName == 'oracle'"> rownum &lt; 2 </if>
+		<if test="dbName == 'mysql'"> limit 1 </if>
+	</select>  -->
+	 
+	<select id="getCurrentMaxSort" resultType="java.lang.Integer">
+		select  
+		   <if test="dbName == 'mssql'"> top 1 </if> a.sort
+		from goods_category a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_id=#{parent.id} AND a.merchant_id = #{merchantId}
+		order by a.sort desc
+		<if test="dbName == 'oracle'"> rownum &lt; 2 </if>
+		<if test="dbName == 'mysql'"> limit 1 </if>
+	</select>
+	
+	<select id="findList" resultType="GoodsCategory">
+		SELECT 
+			<include refid="goodsCategoryColumns"/>
+		FROM goods_category a
+		<include refid="goodsCategoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="categoryNo != null and categoryNo != ''">
+				AND a.category_no = #{categoryNo}
+			</if>
+			<if test="categoryName != null and categoryName != ''">
+				AND a.category_name = #{categoryName}
+			</if>
+			<if test="level != null and level != ''">
+				AND a.level = #{level}
+			</if>
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+			<if test="merchantId != null and merchantId != ''">
+				AND  a.merchant_id = #{merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort 
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="GoodsCategory">
+		SELECT 
+			<include refid="goodsCategoryColumns"/>
+		FROM goods_category a
+		<include refid="goodsCategoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="GoodsCategory">
+		SELECT
+			<include refid="goodsCategoryColumns"/>
+		FROM goods_category a 
+		<include refid="goodsCategoryJoins"/> 
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="parentIds != null and '' != parentIds">	
+		AND a.parent_ids LIKE #{parentIds} 
+		</if>
+		AND a.merchant_id = #{merchantId}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="countCategoryNo" resultType="java.lang.Integer">
+		SELECT count(0)
+		FROM goods_category a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		AND a.category_no = #{categoryNo} 
+		AND a.merchant_id = #{merchantId}
+	</select>
+	
+	<select id="countCategoryGoods" resultType="java.lang.Integer">
+		SELECT count(0)
+		FROM goods g
+		LEFT JOIN goods_category gc ON g.goods_category_id = gc.id
+		WHERE g.del_flag = '0' 
+		AND (g.goods_category_id = #{id} 
+		     OR  gc.parent_ids LIKE 
+		            <if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+		)
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO goods_category(
+			category_no,
+			category_name,
+			level,
+			parent_id,
+			structure_no,
+			structure_name,
+			sort,
+			parent_ids,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id,
+			category_icon
+		) VALUES (
+			#{categoryNo},
+			#{categoryName},
+			#{level},
+			#{parent.id},
+			#{structureNo},
+			#{structureName},
+			#{sort},
+			#{parentIds},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{merchantId},
+			#{categoryIcon}
+		)
+	</insert>
+
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO goods_category
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="categoryNo != null">
+				category_no,
+			</if>
+			<if test="categoryName != null">
+				category_name,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="parent.id != null">
+				parent_id,
+			</if>
+			<if test="structureNo != null">
+				structure_no,
+			</if>
+			<if test="structureName != null">
+				structure_name,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="parentIds != null">
+				parent_ids,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="createBy.id != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy.id != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="categoryIcon != null">
+				category_icon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="categoryNo != null">
+				#{categoryNo},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+			<if test="parent.id != null">
+				#{parent.id},
+			</if>
+			<if test="structureNo != null">
+				#{structureNo},
+			</if>
+			<if test="structureName != null">
+				#{structureName},
+			</if>
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="parentIds != null">
+				#{parentIds},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateBy.id != null">
+				#{updateBy.id},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="categoryIcon != null">
+				#{categoryIcon},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE goods_category SET 	
+			category_no = #{categoryNo},
+			category_name = #{categoryName},
+			level = #{level},
+			parent_id = #{parent.id},
+			structure_no = #{structureNo},
+			structure_name = #{structureName},
+			sort = #{sort},
+			parent_ids = #{parentIds},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			merchant_id = #{merchantId},
+			category_icon =#{categoryIcon}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE goods_category  	
+		<set >
+			<if test="categoryNo != null">	
+			category_no = #{categoryNo},
+			</if>
+			<if test="categoryName != null">	
+			category_name = #{categoryName},
+			</if>
+			<if test="level != null">	
+			level = #{level},
+			</if>
+			<if test="parent.id != null">	
+			parent_id = #{parent.id},
+			</if>
+			<if test="structureNo != null">	
+			structure_no = #{structureNo},
+			</if>
+			<if test="structureName != null">	
+			structure_name = #{structureName},
+			</if>
+			<if test="sort != null">	
+			sort = #{sort},
+			</if>
+			<if test="parentIds != null">	
+			parent_ids = #{parentIds},
+			</if>
+			<if test="remarks != null">
+			remarks = #{remarks},
+			</if>
+			<if test="updateBy.id != null">	
+			update_by = #{updateBy.id},
+			</if>
+			<if test="updateDate != null">	
+			update_date = #{updateDate},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+			<if test="categoryIcon != null">	
+			category_icon = #{categoryIcon},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE goods_category SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSort">
+		UPDATE goods_category SET 
+			sort = #{sort}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE goods_category SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+	</update>
+</mapper>

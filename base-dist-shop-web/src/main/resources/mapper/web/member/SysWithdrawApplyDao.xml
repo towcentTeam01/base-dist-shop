@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.member.dao.SysWithdrawApplyDao">
+    
+	<sql id="sysWithdrawApplyColumns">
+		a.id AS "id",
+		a.amount AS "amount",
+		a.status AS "status",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy1.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.merchant_id AS "merchantId",
+		u2.mobile AS "createBy1.mobile",
+		u2.nick_name AS "createBy1.nickName"
+	</sql>
+	
+	<sql id="sysWithdrawApplyJoins">
+		LEFT JOIN sys_front_account u2 ON u2.id = a.create_by 
+	</sql>
+    
+	<select id="get" resultType="SysWithdrawApply">
+		SELECT 
+			<include refid="sysWithdrawApplyColumns"/>
+		FROM sys_withdraw_apply a
+		<include refid="sysWithdrawApplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysWithdrawApply">
+		SELECT 
+			<include refid="sysWithdrawApplyColumns"/>
+		FROM sys_withdraw_apply a
+		<include refid="sysWithdrawApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="createBy1 != null and createBy1.id != null and createBy1.id != ''">
+				AND a.create_by = #{createBy1.id}
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysWithdrawApply">
+		SELECT 
+			<include refid="sysWithdrawApplyColumns"/>
+		FROM sys_withdraw_apply a
+		<include refid="sysWithdrawApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="merchantId != null and merchantId != ''">
+				AND a.merchant_id = #{merchantId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO sys_withdraw_apply(
+					amount,
+					status,
+					remarks,
+					create_by,
+					create_date,
+					update_by,
+					update_date,
+					del_flag,
+					merchant_id
+		) VALUES (
+			#{amount},
+			#{status},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{merchantId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO sys_withdraw_apply 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="amount != null">	
+				amount,
+			</if>	
+			<if test="status != null">	
+				status,
+			</if>	
+			<if test="remarks != null">	
+				remarks,
+			</if>	
+			<if test="createBy.id != null">	
+				create_by,
+			</if>	
+			<if test="createDate != null">	
+				create_date,
+			</if>	
+			<if test="updateBy.id != null">	
+				update_by,
+			</if>	
+			<if test="updateDate != null">	
+				update_date,
+			</if>	
+			<if test="delFlag != null">	
+				del_flag,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="amount != null">
+				#{amount},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="createBy.id != null">
+				#{createBy.id},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateBy.id != null">
+				#{updateBy.id},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_withdraw_apply SET 	
+			amount = #{amount},
+			status = #{status},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			merchant_id = #{merchantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE sys_withdraw_apply  	
+		<set >		
+			<if test="amount != null">	
+			amount = #{amount},
+			</if>
+			<if test="status != null">	
+			status = #{status},
+			</if>
+			<if test="remarks != null">	
+			remarks = #{remarks},
+			</if>
+			<if test="updateBy.id != null">	
+			update_by = #{updateBy.id},
+			</if>
+			<if test="updateDate != null">	
+			update_date = #{updateDate},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_withdraw_apply SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

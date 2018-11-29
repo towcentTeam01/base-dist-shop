@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.towcent.dist.shop.web.share.dao.ShareCategoryDao">
+    
+	<sql id="shareCategoryColumns">
+		a.id AS "id",
+		a.category_no AS "categoryNo",
+		a.share_desc AS "shareDesc",
+		a.share_image AS "shareImage",
+		a.share_title AS "shareTitle",
+		a.merchant_id AS "merchantId",
+		a.category_id AS "categoryId"
+	</sql>
+	
+	<sql id="shareCategoryJoins">
+	</sql>
+    
+	<select id="get" resultType="ShareCategory">
+		SELECT 
+			<include refid="shareCategoryColumns"/>
+		FROM share_category a
+		<include refid="shareCategoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ShareCategory">
+		SELECT 
+			<include refid="shareCategoryColumns"/>
+		FROM share_category a
+		<include refid="shareCategoryJoins"/>
+		<where>
+			
+			<if test="categoryNo != null and categoryNo != ''">
+				AND a.category_no = #{categoryNo}
+			</if>
+			<if test="shareDesc != null and shareDesc != ''">
+				AND a.share_desc = #{shareDesc}
+			</if>
+			<if test="shareTitle != null and shareTitle != ''">
+				AND a.share_title = #{shareTitle}
+			</if>
+			<if test="categoryId != null and categoryId != ''">
+				AND a.category_id = #{categoryId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ShareCategory">
+		SELECT 
+			<include refid="shareCategoryColumns"/>
+		FROM share_category a
+		<include refid="shareCategoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" keyProperty="id">
+		INSERT INTO share_category(
+					category_no,
+					share_desc,
+					share_image,
+					share_title,
+					merchant_id,
+					category_id
+		) VALUES (
+			#{categoryNo},
+			#{shareDesc},
+			#{shareImage},
+			#{shareTitle},
+			#{merchantId},
+			#{categoryId}
+		)
+	</insert>
+	
+	<insert id="insertSelective" keyProperty="id">
+		INSERT INTO share_category 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="categoryNo != null">	
+				category_no,
+			</if>	
+			<if test="shareDesc != null">	
+				share_desc,
+			</if>	
+			<if test="shareImage != null">	
+				share_image,
+			</if>	
+			<if test="shareTitle != null">	
+				share_title,
+			</if>	
+			<if test="merchantId != null">	
+				merchant_id,
+			</if>	
+			<if test="categoryId != null">	
+				category_id,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="categoryNo != null">
+				#{categoryNo},
+			</if>
+			<if test="shareDesc != null">
+				#{shareDesc},
+			</if>
+			<if test="shareImage != null">
+				#{shareImage},
+			</if>
+			<if test="shareTitle != null">
+				#{shareTitle},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE share_category SET 	
+			category_no = #{categoryNo},
+			share_desc = #{shareDesc},
+			share_image = #{shareImage},
+			share_title = #{shareTitle},
+			merchant_id = #{merchantId},
+			category_id = #{categoryId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSelective">
+		UPDATE share_category  	
+		<set >		
+			<if test="categoryNo != null">	
+			category_no = #{categoryNo},
+			</if>
+			<if test="shareDesc != null">	
+			share_desc = #{shareDesc},
+			</if>
+			<if test="shareImage != null">	
+			share_image = #{shareImage},
+			</if>
+			<if test="shareTitle != null">	
+			share_title = #{shareTitle},
+			</if>
+			<if test="merchantId != null">	
+			merchant_id = #{merchantId},
+			</if>
+			<if test="categoryId != null">	
+			category_id = #{categoryId},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM share_category
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
